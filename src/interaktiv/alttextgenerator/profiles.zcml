@@ -1,0 +1,32 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="interaktiv.alttextgenerator"
+    >
+
+  <genericsetup:registerProfile
+      name="default"
+      title="Interaktiv Alt Text Generator: Install"
+      description="Package to configure a new Interaktiv Alt Text Generator site"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/default"
+      />
+
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="Interaktiv Alt Text Generator: Uninstall"
+      description="Uninstall Interaktiv Alt Text Generator setup."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/uninstall"
+      />
+
+  <!-- Hide Uninstall Profile-->
+  <utility
+      factory=".setuphandlers.HiddenProfiles"
+      name="interaktiv.alttextgenerator"
+      />
+
+
+  <include package=".upgrades" />
+
+</configure>
