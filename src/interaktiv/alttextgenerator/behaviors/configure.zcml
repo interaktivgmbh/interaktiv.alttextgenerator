@@ -1,0 +1,22 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="interaktiv.alttextgenerator"
+    >
+
+  <include
+      package="plone.behavior"
+      file="meta.zcml"
+      />
+
+  <plone:behavior
+      name="interaktiv.alttextgenerator.behavior.alt_text_suggestion"
+      title="Image Alt Text Suggestion"
+      description="Adds Image Alt Text Suggestion Behavior"
+      factory=".alt_text_suggestion.AltTextSuggestionAdapter"
+      provides=".alt_text_suggestion.IAltTextSuggestionBehavior"
+      for=".alt_text_suggestion.IAltTextSuggestionMarker"
+      marker=".alt_text_suggestion.IAltTextSuggestionMarker"
+      />
+
+</configure>
