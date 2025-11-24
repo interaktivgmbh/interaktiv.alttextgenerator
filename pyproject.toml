@@ -32,6 +32,7 @@ dependencies = [
     "plone.restapi",
     "plone.volto",
     "interaktiv.aiclient",
+    "interaktiv.alttexts",
 ]
 
 [project.optional-dependencies]
