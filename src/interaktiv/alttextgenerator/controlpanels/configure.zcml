@@ -5,6 +5,16 @@
     i18n_domain="interaktiv.alttextgenerator"
     >
 
-  <!-- -*- extra stuff goes here -*- -->
+  <browser:page
+      name="alttextgenerator-controlpanel"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".alttextgenerator_settings.AltTextGeneratorView"
+      permission="cmf.ManagePortal"
+      />
+
+  <adapter
+      factory=".alttextgenerator_settings.AltTextGeneratorConfigletPanel"
+      name="alttextgenerator-controlpanel"
+      />
 
 </configure>
