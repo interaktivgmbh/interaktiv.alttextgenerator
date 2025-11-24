@@ -1,4 +1,6 @@
-from interaktiv.alttextgenerator.behaviors.alt_text_suggestion import IAltTextSuggestionMarker
+from interaktiv.alttextgenerator.behaviors.alt_text_suggestion import (
+    IAltTextSuggestionMarker,
+)
 from plone.indexer import indexer
 
 
