@@ -1,7 +1,7 @@
 <configure xmlns="http://namespaces.zope.org/zope">
 
   <adapter
-      factory=".alt_text_suggestion.IAltTextSuggestionMarker"
+      factory=".alt_text_suggestion.alt_text_suggestion_indexer"
       name="alt_text_suggestion"
       />
 
