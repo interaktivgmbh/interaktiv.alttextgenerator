@@ -7,6 +7,7 @@
            prefix="interaktiv.alttextgenerator"
   >
     <value key="system_prompt">You generate clear, accurate, and context-appropriate alternative text for any graphic. Describe only what is visible, be objective, keep it concise, and avoid assumptions about meaning or intent unless explicitly provided.</value>
+    <value key="user_prompt">Generate an alternative text in {language} for this image. Provide only the alternative text, without any preface or extras.</value>
   </records>
 
 </registry>

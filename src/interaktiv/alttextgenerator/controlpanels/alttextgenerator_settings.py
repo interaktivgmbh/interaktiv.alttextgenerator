@@ -12,7 +12,32 @@ class IAltTextGeneratorSettings(Interface):
     system_prompt = schema.Text(
         title=_("System Prompt"),
         description=_("The system prompt used for alt text generation."),
+        required=False,
+    )
+
+    user_prompt = schema.Text(
+        title=_("User Prompt"),
+        description=_("The user prompt used for alt text generation. Use {language} to specify the target language."),
         required=True,
+    )
+
+    target_language = schema.Choice(
+        title=_("Target language"),
+        description=_("The target language of alternative texts."),
+        required=True,
+        default="en",
+        vocabulary="plone.app.vocabularies.AvailableContentLanguages"
+    )
+
+    whitelisted_image_types = schema.List(
+        title=_("Whitelisted image types"),
+        description=_("The images types that are supported for generation of alt texts."),
+        required=True,
+        default=["image/jpeg", "image/png", "image/gif", "image/webp", "image/svg+xml"],
+        missing_value=[],
+        value_type=schema.Choice(
+            vocabulary="interaktiv.alttextgenerator.image_mimetypes_vocabulary"
+        )
     )
 
 

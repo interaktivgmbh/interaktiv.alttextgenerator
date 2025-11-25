@@ -33,6 +33,7 @@ dependencies = [
     "plone.volto",
     "interaktiv.aiclient",
     "interaktiv.alttexts",
+    "CairoSVG==2.7.1",
 ]
 
 [project.optional-dependencies]
