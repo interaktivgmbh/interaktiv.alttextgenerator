@@ -15,7 +15,7 @@ class TestSetupUninstall:
     def test_browserlayer_not_registered(self, browser_layers):
         """Test that IBrowserLayer is not registered."""
         from interaktiv.alttextgenerator.interfaces import (
-            IInteraktivAltTextGeneratorBrwoserLayer,
+            IInteraktivAltTextGeneratorBrowserLayer,
         )
 
-        assert IInteraktivAltTextGeneratorBrwoserLayer not in browser_layers
+        assert IInteraktivAltTextGeneratorBrowserLayer not in browser_layers

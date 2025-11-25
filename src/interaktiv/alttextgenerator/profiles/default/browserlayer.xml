@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layers>
-  <layer interface="interaktiv.alttextgenerator.interfaces.IBrowserLayer"
+  <layer interface="interaktiv.alttextgenerator.interfaces.IInteraktivAltTextGeneratorBrowserLayer"
          name="interaktiv.alttextgenerator"
   />
 </layers>
