@@ -1,5 +1,9 @@
 <configure xmlns="http://namespaces.zope.org/zope">
 
-  <!-- -*- extra stuff goes here -*- -->
+  <utility
+      provides="zope.schema.interfaces.IVocabularyFactory"
+      name="interaktiv.alttextgenerator.image_mimetypes_vocabulary"
+      component=".image_mimetypes.image_mimetypes_vocabulary"
+      />
 
 </configure>
