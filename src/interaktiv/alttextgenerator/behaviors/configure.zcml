@@ -10,13 +10,13 @@
       />
 
   <plone:behavior
-      name="interaktiv.alttextgenerator.behavior.alt_text_suggestion"
-      title="Image Alt Text Suggestion"
-      description="Adds Image Alt Text Suggestion Behavior"
-      factory=".alt_text_suggestion.AltTextSuggestionAdapter"
-      provides=".alt_text_suggestion.IAltTextSuggestionBehavior"
-      for=".alt_text_suggestion.IAltTextSuggestionMarker"
-      marker=".alt_text_suggestion.IAltTextSuggestionMarker"
+      name="interaktiv.alttextgenerator.behavior.alt_text_metadata"
+      title="Image Alt Text Metadata"
+      description="Adds Image Alt Text Metadata Behavior"
+      factory=".alt_text_metadata.AltTextMetadataAdapter"
+      provides=".alt_text_metadata.IAltTextMetadataBehavior"
+      for=".alt_text_metadata.IAltTextMetadataMarker"
+      marker=".alt_text_metadata.IAltTextMetadataMarker"
       />
 
 </configure>

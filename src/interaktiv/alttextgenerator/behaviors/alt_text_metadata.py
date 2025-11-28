@@ -9,7 +9,7 @@ from zope.interface import provider
 
 
 @provider(IFormFieldProvider)
-class IAltTextSuggestionBehavior(model.Schema):
+class IAltTextMetadataBehavior(model.Schema):
     #
     # These values should not be edited by hand!
     #
@@ -27,7 +27,7 @@ class IAltTextSuggestionBehavior(model.Schema):
         title=_("alt_text_model_used_label", default="Model used"),
         description=_(
             "alt_text_model_used_description",
-            default="The model used to generate the alt text suggestion.",
+            default="The model used to generate the alt text.",
         ),
         required=False,
         default="",
@@ -38,19 +38,19 @@ class IAltTextSuggestionBehavior(model.Schema):
         title=_("alt_text_generation_time_label", default="Time of generation"),
         description=_(
             "alt_text_generation_time_description",
-            default="The time at which the alt text suggestion was generated.",
+            default="The time at which the alt text was generated.",
         ),
         required=False,
     )
     directives.omitted("alt_text_generation_time")
 
 
-class IAltTextSuggestionMarker(Interface):
-    """Marker interface for content that supports alt text suggestions."""
+class IAltTextMetadataMarker(Interface):
+    """Marker interface for content that supports alt text metadata."""
 
 
-@implementer(IAltTextSuggestionBehavior)
-class AltTextSuggestionAdapter:
+@implementer(IAltTextMetadataBehavior)
+class AltTextMetadataAdapter:
     def __init__(self, context):
         self.context = context
 

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2022-05-25 17:12+0000\n"
+"POT-Creation-Date: 2025-11-28 10:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,3 +13,105 @@ msgstr ""
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: interaktiv.alttextgenerator\n"
+
+#: interaktiv/alttextgenerator/behaviors/configure.zcml:20
+msgid "Adds Image Alt Text Metadata Behavior"
+msgstr ""
+
+#: interaktiv/alttextgenerator/profiles/default/controlpanel.xml
+msgid "Alt Text Generator"
+msgstr ""
+
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:51
+msgid "Alt Text Generator Settings"
+msgstr ""
+
+#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:56
+msgid "Alt text generation is disabled for this content."
+msgstr ""
+
+#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:67
+msgid "Alt text generation is not supported for this file type."
+msgstr ""
+
+#: interaktiv/alttextgenerator/behaviors/configure.zcml:20
+msgid "Image Alt Text Metadata"
+msgstr ""
+
+#: interaktiv/alttextgenerator/profiles.zcml:13
+msgid "Installs the interaktiv.alttextgenerator add-on."
+msgstr ""
+
+#: interaktiv/alttextgenerator/profiles.zcml:13
+msgid "Interaktiv Alt Text Generator: Install"
+msgstr ""
+
+#: interaktiv/alttextgenerator/profiles.zcml:21
+msgid "Interaktiv Alt Text Generator: Uninstall"
+msgstr ""
+
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:13
+msgid "System Prompt"
+msgstr ""
+
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:27
+msgid "Target language"
+msgstr ""
+
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:36
+msgid "The images types that are supported for generation of alt texts."
+msgstr ""
+
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:14
+msgid "The system prompt used for alt text generation."
+msgstr ""
+
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:28
+msgid "The target language of alternative texts."
+msgstr ""
+
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:20
+msgid "The user prompt used for alt text generation. Use {language} to specify the target language."
+msgstr ""
+
+#: interaktiv/alttextgenerator/profiles.zcml:21
+msgid "Uninstalls the interaktiv.alttextgenerator add-on."
+msgstr ""
+
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:19
+msgid "User Prompt"
+msgstr ""
+
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:35
+msgid "Whitelisted image types"
+msgstr ""
+
+#. Default: "Is this alternative text AI generated?"
+#: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:18
+msgid "alt_text_ai_generated_description"
+msgstr ""
+
+#. Default: "AI generated"
+#: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:17
+msgid "alt_text_ai_generated_label"
+msgstr ""
+
+#. Default: "The time at which the alt text was generated."
+#: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:39
+msgid "alt_text_generation_time_description"
+msgstr ""
+
+#. Default: "Time of generation"
+#: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:38
+msgid "alt_text_generation_time_label"
+msgstr ""
+
+#. Default: "The model used to generate the alt text."
+#: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:28
+msgid "alt_text_model_used_description"
+msgstr ""
+
+#. Default: "Model used"
+#: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:27
+msgid "alt_text_model_used_label"
+msgstr ""

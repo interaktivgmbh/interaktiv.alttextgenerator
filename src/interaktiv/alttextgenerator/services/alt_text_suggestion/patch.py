@@ -53,7 +53,7 @@ class AltTextSuggestionPatch(Service):
         check = True
 
         if not check:
-            raise ValidationError(_("Alt text generation is disabled for this file."))
+            raise ValidationError(_("Alt text generation is disabled for this content."))
 
     def check_whitelisted_mimetype(self) -> Union[None, NoReturn]:
         mimetype: str = self.context.image.contentType
