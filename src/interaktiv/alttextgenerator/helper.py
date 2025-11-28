@@ -13,6 +13,7 @@ from zope.component.hooks import getSite
 
 import base64
 import cairosvg
+import re
 
 
 def b64_resized_image(image: NamedBlobImage, size: Tuple[int, int] = (512, 512)) -> str:
@@ -75,3 +76,22 @@ def get_target_language() -> str:
     languages = ltool.getAvailableLanguages()
 
     return languages[target_language].get("native", target_language)
+
+
+def glob_matches(pattern: str, path: str) -> bool:
+    """Match a web path against a glob pattern."""
+    # Normalize path for relative patterns
+    path_to_match = path.lstrip("/") if not pattern.startswith("/") else path
+    regex = re.escape(pattern)
+
+    # Handle wildcards
+    regex = regex.replace(r"\*\*", ".*")  # ** -> zero or more segments
+    regex = regex.replace(r"\*", "[^/]+")  # * -> exactly one segment
+    regex = regex.replace(r"\?", ".")  # ? -> any single character
+
+    # Special case: trailing /** should match path with or without trailing slash
+    if regex.endswith("/.*"):
+        regex = regex[:-3] + "(/.*)?"
+
+    regex = f"^{regex}$"
+    return re.fullmatch(regex, path_to_match) is not None
