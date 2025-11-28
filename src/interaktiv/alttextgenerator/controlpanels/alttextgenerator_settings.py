@@ -47,7 +47,10 @@ class IAltTextGeneratorSettings(Interface):
     blacklisted_paths = schema.List(
         title=_("Blacklisted paths"),
         description=_(
-            "Here you can add paths that should be excluded from generation."
+            "List of paths for which alt text generation should be disabled. "
+            "Use * for one segment or any amount of characters inside a segment, "
+            "** for multiple segments, and ? for a single character. "
+            "Segments are separated using /."
         ),
         required=False,
         default=[],

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2025-11-28 10:50+0000\n"
+"POT-Creation-Date: 2025-11-28 14:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,16 +25,20 @@ msgstr ""
 msgid "Alt Text Generator"
 msgstr ""
 
-#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:51
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:64
 msgid "Alt Text Generator Settings"
 msgstr ""
 
-#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:56
+#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:59
 msgid "Alt text generation is disabled for this content."
 msgstr ""
 
-#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:68
+#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:71
 msgid "Alt text generation is not supported for this file type."
+msgstr ""
+
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:48
+msgid "Blacklisted paths"
 msgstr ""
 
 #: interaktiv/alttextgenerator/behaviors/configure.zcml:20
@@ -51,6 +55,10 @@ msgstr ""
 
 #: interaktiv/alttextgenerator/profiles.zcml:21
 msgid "Interaktiv Alt Text Generator: Uninstall"
+msgstr ""
+
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:49
+msgid "List of paths for which alt text generation should be disabled. Use * for one segment or any amount of characters inside a segment, ** for multiple segments, and ? for a single character. Segments are separated using /."
 msgstr ""
 
 #: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:13

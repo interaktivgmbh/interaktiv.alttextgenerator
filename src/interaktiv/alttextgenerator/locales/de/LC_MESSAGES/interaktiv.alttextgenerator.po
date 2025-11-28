@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2025-11-28 10:50+0000\n"
+"POT-Creation-Date: 2025-11-28 14:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,17 +22,21 @@ msgstr "Fügt das Alternativtext Metadaten Behavior für Bilder hinzu."
 msgid "Alt Text Generator"
 msgstr "Alternativtext Generator"
 
-#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:51
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:64
 msgid "Alt Text Generator Settings"
 msgstr "Alternativtext Generator Einstellungen"
 
-#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:56
+#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:59
 msgid "Alt text generation is disabled for this content."
 msgstr "Die Alternativtextgeneriung ist für diesen Inhalt deaktiviert."
 
-#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:68
+#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:71
 msgid "Alt text generation is not supported for this file type."
 msgstr "Die Alternativtextgenerierung wird für diesen Dateityp nicht unterstützt."
+
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:48
+msgid "Blacklisted paths"
+msgstr "Deaktivierte Pfade"
 
 #: interaktiv/alttextgenerator/behaviors/configure.zcml:20
 msgid "Image Alt Text Metadata"
@@ -49,6 +53,10 @@ msgstr "Interaktiv Alternativtextgenerator: Installieren"
 #: interaktiv/alttextgenerator/profiles.zcml:21
 msgid "Interaktiv Alt Text Generator: Uninstall"
 msgstr "Interaktiv Alternativtextgenerator: Deinstallieren"
+
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:49
+msgid "List of paths for which alt text generation should be disabled. Use * for one segment or any amount of characters inside a segment, ** for multiple segments, and ? for a single character. Segments are separated using /."
+msgstr "Eine Liste von Pfaden, für welche die Alternativtextgenerierung deaktiviert werden soll. Verwende * um ein Segment oder eine beliebige Anzahl von Zeichen innerhalb eines Segments, ** um mehrere Segmente und ? um ein einzelnes Zeichen zu ersetzen. Segmente werden durch / getrennt."
 
 #: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:13
 msgid "System Prompt"
