@@ -55,6 +55,14 @@ class AltTextMetadataAdapter:
         self.context = context
 
     @property
+    def alt_text_ai_generated(self):
+        return self.context.alt_text_ai_generated
+
+    @alt_text_ai_generated.setter
+    def alt_text_ai_generated(self, value):
+        self.context.alt_text_ai_generated = value
+
+    @property
     def alt_text_model_used(self):
         return self.context.alt_text_model_used
 
