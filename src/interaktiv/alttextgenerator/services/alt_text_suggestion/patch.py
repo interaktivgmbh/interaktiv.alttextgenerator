@@ -1,11 +1,6 @@
-from datetime import datetime
-from interaktiv.aiclient.client import AIClient
-from interaktiv.aiclient.helper import get_model_name_from_slug
-from interaktiv.aiclient.interfaces import IAIClient
 from interaktiv.alttextgenerator import _
-from interaktiv.alttextgenerator.helper import b64_resized_image
-from interaktiv.alttextgenerator.helper import construct_prompt_with_image
-from plone.namedfile.file import NamedBlobImage
+from interaktiv.alttextgenerator.generator import generate_alt_text_suggestion
+from interaktiv.alttextgenerator.helper import glob_matches
 from plone.registry import Registry
 from plone.registry.interfaces import IRegistry
 from plone.restapi.interfaces import ISerializeToJson
@@ -16,11 +11,10 @@ from typing import List
 from typing import Union
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
-from zope.lifecycleevent import modified
 
 
 class ValidationError(Exception):
-    def __init__(self, message, status=304):
+    def __init__(self, message, status):
         super().__init__(message)
         self.message = message
         self.status = status
@@ -30,13 +24,13 @@ class AltTextSuggestionPatch(Service):
     def reply(self) -> Union[Dict[str, str], Any]:
         try:
             # check if generation is allowed for the current context
-            self.check_generation_enabled()
+            self.check_generation_allowed()
             self.check_whitelisted_mimetype()
         except ValidationError as e:
             self.request.response.setStatus(e.status)
             return {"message": e.message}
 
-        self.generate_alt_text_suggestion()
+        generate_alt_text_suggestion(self.context)
 
         serializer = queryMultiAdapter((self.context, self.request), ISerializeToJson)
 
@@ -47,13 +41,22 @@ class AltTextSuggestionPatch(Service):
         serialized_content = serializer(version=self.request.get("version"))
         return serialized_content
 
-    def check_generation_enabled(self) -> None:
-        # TODO add configuration for blacklisted paths and do the check
-        check = True
+    def check_generation_allowed(self) -> None:
+        registry: Registry = getUtility(IRegistry)
+        entry = "interaktiv.alttextgenerator.blacklisted_paths"
+        blacklist: List[str] = registry.get(entry, [])
 
-        if not check:
+        if not blacklist:
+            return
+
+        content_path = "/".join(self.context.getPhysicalPath()[2:])
+
+        if not content_path.startswith("/"):
+            content_path = "/" + content_path
+
+        if any(glob_matches(glob, content_path) for glob in blacklist):
             raise ValidationError(
-                _("Alt text generation is disabled for this content.")
+                _("Alt text generation is disabled for this content."), 409
             )
 
     def check_whitelisted_mimetype(self) -> None:
@@ -65,26 +68,5 @@ class AltTextSuggestionPatch(Service):
 
         if mimetype not in allowed_mimetypes:
             raise ValidationError(
-                _("Alt text generation is not supported for this file type.")
+                _("Alt text generation is not supported for this file type."), 406
             )
-
-    def generate_alt_text_suggestion(self):
-        image: NamedBlobImage = self.context.image
-        image_base64 = b64_resized_image(image)
-
-        prompt = construct_prompt_with_image(image_base64)
-
-        ai_client: AIClient = getUtility(IAIClient)
-        alt_text = ai_client.call(prompt)
-
-        selected_model = get_model_name_from_slug(
-            ai_client.selected_model, self.context
-        )
-
-        self.context.alt_text = alt_text
-        self.context.alt_text_ai_generated = True
-        self.context.alt_text_model_used = selected_model
-        self.context.alt_text_generation_time = datetime.now()
-
-        modified(self.context)
-        self.context.reindexObject()

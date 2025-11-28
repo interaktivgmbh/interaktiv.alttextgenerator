@@ -44,6 +44,16 @@ class IAltTextGeneratorSettings(Interface):
         ),
     )
 
+    blacklisted_paths = schema.List(
+        title=_("Blacklisted paths"),
+        description=_(
+            "Here you can add paths that should be excluded from generation."
+        ),
+        required=False,
+        default=[],
+        value_type=schema.TextLine(),
+    )
+
 
 class AltTextGeneratorForm(RegistryEditForm):
     schema = IAltTextGeneratorSettings
