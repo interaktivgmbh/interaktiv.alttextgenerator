@@ -16,12 +16,12 @@ COMMON_IMAGE_MIMETYPE_EXTENSIONS = {
 }
 
 
+# noInspection PyUnusedLocal
 @provider(IVocabularyFactory)
 def image_mimetypes_vocabulary(context) -> SimpleVocabulary:
     terms = [
         SimpleTerm(mime, mime, ext)
-        for mime, ext
-        in COMMON_IMAGE_MIMETYPE_EXTENSIONS.items()
+        for mime, ext in COMMON_IMAGE_MIMETYPE_EXTENSIONS.items()
     ]
 
     return SimpleVocabulary(terms)

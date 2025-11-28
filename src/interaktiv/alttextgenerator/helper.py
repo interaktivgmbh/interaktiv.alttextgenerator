@@ -1,15 +1,18 @@
-import base64
 from io import BytesIO
-from typing import List, Dict, Any, Tuple
-
-import cairosvg
 from PIL import Image
 from plone.namedfile.file import NamedBlobImage
 from plone.registry import Registry
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Tuple
 from zope.component import getUtility
 from zope.component.hooks import getSite
+
+import base64
+import cairosvg
 
 
 def b64_resized_image(image: NamedBlobImage, size: Tuple[int, int] = (512, 512)) -> str:
@@ -19,9 +22,7 @@ def b64_resized_image(image: NamedBlobImage, size: Tuple[int, int] = (512, 512))
     # svgs are not supported by the OpenRouter API; therefore, they must be converted
     if image_mimetype == "image/svg+xml":
         image_bytes = cairosvg.svg2png(
-            bytestring=image.data,
-            output_width=size[0],
-            output_height=size[1]
+            bytestring=image.data, output_width=size[0], output_height=size[1]
         )
     else:
         img = Image.open(BytesIO(image.data))
@@ -57,11 +58,8 @@ def construct_prompt_with_image(b64_image: str) -> List[Dict[str, Any]]:
         "role": "user",
         "content": [
             {"type": "text", "text": user_prompt},
-            {
-                "type": "image_url",
-                "image_url": {"url": b64_image}
-            }
-        ]
+            {"type": "image_url", "image_url": {"url": b64_image}},
+        ],
     })
 
     return result

@@ -2,11 +2,25 @@
 <object name="portal_catalog">
 
   <index meta_type="FieldIndex"
-         name="alt_text_suggestion"
+         name="alt_text_ai_generated"
   >
-    <indexed_attr value="alt_text_suggestion" />
+    <indexed_attr value="alt_text_ai_generated" />
   </index>
 
-  <column value="alt_text_suggestion" />
+  <index meta_type="FieldIndex"
+         name="alt_text_model_used"
+  >
+    <indexed_attr value="alt_text_model_used" />
+  </index>
+
+  <index meta_type="FieldIndex"
+         name="alt_text_generation_time"
+  >
+    <indexed_attr value="alt_text_generation_time" />
+  </index>
+
+  <column value="alt_text_ai_generated" />
+  <column value="alt_text_model_used" />
+  <column value="alt_text_generation_time" />
 
 </object>

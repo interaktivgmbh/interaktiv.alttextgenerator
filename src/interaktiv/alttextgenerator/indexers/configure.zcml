@@ -1,8 +1,18 @@
 <configure xmlns="http://namespaces.zope.org/zope">
 
   <adapter
-      factory=".alt_text_suggestion.alt_text_suggestion_indexer"
-      name="alt_text_suggestion"
+      factory=".alt_text_suggestion.alt_text_ai_generated_indexer"
+      name="alt_text_ai_generated"
+      />
+
+  <adapter
+      factory=".alt_text_suggestion.alt_text_model_used_indexer"
+      name="alt_text_model_used"
+      />
+
+  <adapter
+      factory=".alt_text_suggestion.alt_text_generation_time_indexer"
+      name="alt_text_generation_time"
       />
 
 </configure>
