@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2025-11-28 10:26+0000\n"
+"POT-Creation-Date: 2025-11-28 10:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Alt text generation is disabled for this content."
 msgstr ""
 
-#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:67
+#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:68
 msgid "Alt text generation is not supported for this file type."
 msgstr ""
 
@@ -94,7 +94,7 @@ msgstr ""
 msgid "alt_text_ai_generated_description"
 msgstr ""
 
-#. Default: "AI generated"
+#. Default: "The alt text is AI generated"
 #: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:17
 msgid "alt_text_ai_generated_label"
 msgstr ""

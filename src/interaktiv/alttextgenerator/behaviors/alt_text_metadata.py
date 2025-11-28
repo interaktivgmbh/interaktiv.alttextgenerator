@@ -14,7 +14,7 @@ class IAltTextMetadataBehavior(model.Schema):
     # These values should not be edited by hand!
     #
     alt_text_ai_generated = schema.Bool(
-        title=_("alt_text_ai_generated_label", default="AI generated"),
+        title=_("alt_text_ai_generated_label", default="The alt text is AI generated"),
         description=_(
             "alt_text_ai_generated_description",
             default="Is this alternative text AI generated?",
