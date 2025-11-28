@@ -13,7 +13,6 @@ from plone.restapi.services import Service
 from typing import Any
 from typing import Dict
 from typing import List
-from typing import NoReturn
 from typing import Union
 from zope.component import getUtility
 from zope.component import queryMultiAdapter
@@ -48,21 +47,21 @@ class AltTextSuggestionPatch(Service):
         serialized_content = serializer(version=self.request.get("version"))
         return serialized_content
 
-    def check_generation_enabled(self) -> Union[None, NoReturn]:
+    def check_generation_enabled(self) -> None:
         # TODO add configuration for blacklisted paths and do the check
         check = True
 
         if not check:
             raise ValidationError(_("Alt text generation is disabled for this content."))
 
-    def check_whitelisted_mimetype(self) -> Union[None, NoReturn]:
+    def check_whitelisted_mimetype(self) -> None:
         mimetype: str = self.context.image.contentType
 
         registry: Registry = getUtility(IRegistry)
         entry = "interaktiv.alttextgenerator.whitelisted_image_types"
         allowed_mimetypes: List[str] = registry.get(entry, [])
 
-        if not mimetype in allowed_mimetypes:
+        if mimetype not in allowed_mimetypes:
             raise ValidationError(
                 _("Alt text generation is not supported for this file type.")
             )
