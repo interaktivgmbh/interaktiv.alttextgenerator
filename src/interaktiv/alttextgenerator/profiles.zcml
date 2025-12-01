@@ -20,6 +20,15 @@
       directory="profiles/uninstall"
       />
 
+  <genericsetup:registerProfile
+      name="migration"
+      title="Interaktiv Alt Text Generator: Migration"
+      description="Generate alt texts for all images without alt texts."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/migration"
+      post_handler=".setuphandlers.alt_text_migration"
+      />
+
   <!-- Hide Uninstall Profile-->
   <utility
       factory=".setuphandlers.HiddenProfiles"

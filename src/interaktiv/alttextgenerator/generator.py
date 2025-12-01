@@ -10,7 +10,7 @@ from zope.component import getUtility
 from zope.lifecycleevent import modified
 
 
-def generate_alt_text_suggestion(context: Image) -> None:
+def generate_alt_text_suggestion(context: Image) -> bool:
     """Generate and update image alt text and metadata for the given context."""
     image: NamedBlobImage = context.image
     image_base64 = b64_resized_image(image)
@@ -21,7 +21,7 @@ def generate_alt_text_suggestion(context: Image) -> None:
     alt_text = ai_client.call(prompt)
 
     if not alt_text:
-        return
+        return False
 
     selected_model = get_model_name_from_slug(ai_client.selected_model, context)
 
@@ -32,3 +32,5 @@ def generate_alt_text_suggestion(context: Image) -> None:
 
     modified(context)
     context.reindexObject()
+
+    return True
