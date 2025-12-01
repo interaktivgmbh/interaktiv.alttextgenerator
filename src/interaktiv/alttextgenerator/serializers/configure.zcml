@@ -3,7 +3,7 @@
   <!-- Serializers -->
 
   <utility
-      factory=".summary.JSONSummarySerializerMetadata"
+      factory=".summary.AltTextGeneratorJSONSummarySerializerMetadata"
       name="interaktiv.alttextgenerator.summary_serializer_metadata"
       />
 
