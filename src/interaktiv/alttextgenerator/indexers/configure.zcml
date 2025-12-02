@@ -11,8 +11,8 @@
       />
 
   <adapter
-      factory=".alt_text_metadata.alt_text_generation_time_indexer"
-      name="alt_text_generation_time"
+      factory=".alt_text_metadata.alt_text_generation_date_indexer"
+      name="alt_text_generation_date"
       />
 
 </configure>

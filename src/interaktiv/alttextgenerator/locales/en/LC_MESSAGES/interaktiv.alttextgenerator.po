@@ -99,14 +99,14 @@ msgstr ""
 msgid "alt_text_ai_generated_label"
 msgstr ""
 
-#. Default: "The time at which the alt text was generated."
+#. Default: "The date at which the alt text was generated."
 #: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:39
-msgid "alt_text_generation_time_description"
+msgid "alt_text_generation_date_description"
 msgstr ""
 
-#. Default: "Time of generation"
+#. Default: "Date of generation"
 #: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:38
-msgid "alt_text_generation_time_label"
+msgid "alt_text_generation_date_label"
 msgstr ""
 
 #. Default: "The model used to generate the alt text."

@@ -10,5 +10,5 @@ class AltTextGeneratorJSONSummarySerializerMetadata:
         return {
             "alt_text_ai_generated",
             "alt_text_model_used",
-            "alt_text_generation_time",
+            "alt_text_generation_date",
         }

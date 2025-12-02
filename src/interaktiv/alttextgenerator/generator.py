@@ -28,7 +28,7 @@ def generate_alt_text_suggestion(context: Image) -> bool:
     context.alt_text = alt_text
     context.alt_text_ai_generated = True
     context.alt_text_model_used = selected_model
-    context.alt_text_generation_time = datetime.now()
+    context.alt_text_generation_date = datetime.now().date()
 
     modified(context)
     context.reindexObject()

@@ -14,13 +14,13 @@
   </index>
 
   <index meta_type="FieldIndex"
-         name="alt_text_generation_time"
+         name="alt_text_generation_date"
   >
-    <indexed_attr value="alt_text_generation_time" />
+    <indexed_attr value="alt_text_generation_date" />
   </index>
 
   <column value="alt_text_ai_generated" />
   <column value="alt_text_model_used" />
-  <column value="alt_text_generation_time" />
+  <column value="alt_text_generation_date" />
 
 </object>

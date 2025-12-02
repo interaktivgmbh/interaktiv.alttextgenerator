@@ -34,15 +34,15 @@ class IAltTextMetadataBehavior(model.Schema):
     )
     directives.omitted("alt_text_model_used")
 
-    alt_text_generation_time = schema.Datetime(
-        title=_("alt_text_generation_time_label", default="Time of generation"),
+    alt_text_generation_date = schema.Date(
+        title=_("alt_text_generation_date_label", default="Date of generation"),
         description=_(
-            "alt_text_generation_time_description",
-            default="The time at which the alt text was generated.",
+            "alt_text_generation_date_description",
+            default="The date at which the alt text was generated.",
         ),
         required=False,
     )
-    directives.omitted("alt_text_generation_time")
+    directives.omitted("alt_text_generation_date")
 
 
 class IAltTextMetadataMarker(Interface):
@@ -71,9 +71,9 @@ class AltTextMetadataAdapter:
         self.context.alt_text_model_used = value
 
     @property
-    def alt_text_generation_time(self):
-        return self.context.alt_text_generation_time
+    def alt_text_generation_date(self):
+        return self.context.alt_text_generation_date
 
-    @alt_text_generation_time.setter
-    def alt_text_generation_time(self, value):
-        self.context.alt_text_generation_time = value
+    @alt_text_generation_date.setter
+    def alt_text_generation_date(self, value):
+        self.context.alt_text_generation_date = value

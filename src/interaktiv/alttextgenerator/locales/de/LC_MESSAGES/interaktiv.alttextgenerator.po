@@ -99,15 +99,15 @@ msgstr "Erlaubte Bildtypen"
 msgid "alt_text_ai_generated_label"
 msgstr "Wurde dieser Alternativtext von einer KI generiert?"
 
-#. Default: "The time at which the alt text was generated."
+#. Default: "The date at which the alt text was generated."
 #: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:39
-msgid "alt_text_generation_time_description"
-msgstr "Der Zeitpunkt, an dem der Alternativtext generiert wurde."
+msgid "alt_text_generation_date_description"
+msgstr "Das Datum, an dem der Alternativtext generiert wurde."
 
-#. Default: "Time of generation"
+#. Default: "Date of generation"
 #: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:38
-msgid "alt_text_generation_time_label"
-msgstr "Zeitpunkt der Generierung"
+msgid "alt_text_generation_date_label"
+msgstr "Datum der Generierung"
 
 #. Default: "The model used to generate the alt text."
 #: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:28

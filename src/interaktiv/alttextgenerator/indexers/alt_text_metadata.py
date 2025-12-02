@@ -15,5 +15,5 @@ def alt_text_model_used_indexer(obj):
 
 
 @indexer(IAltTextMetadataMarker)
-def alt_text_generation_time_indexer(obj):
-    return getattr(obj, "alt_text_generation_time", "")
+def alt_text_generation_date_indexer(obj):
+    return getattr(obj, "alt_text_generation_date", "")
