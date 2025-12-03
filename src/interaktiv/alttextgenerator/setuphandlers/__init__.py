@@ -2,7 +2,7 @@ from interaktiv.alttextgenerator import logger
 from interaktiv.alttextgenerator.behaviors.alt_text_metadata import (
     IAltTextMetadataMarker,
 )
-from interaktiv.alttextgenerator.generator import generate_alt_text_suggestion
+from interaktiv.alttextgenerator.utils.generator import generate_alt_text_suggestion
 from interaktiv.alttexts.behaviors.alt_text import IAltTextMarker
 from plone import api
 from plone.app.contenttypes.content import Image

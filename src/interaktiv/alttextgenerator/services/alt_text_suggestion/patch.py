@@ -1,5 +1,5 @@
 from interaktiv.alttextgenerator import _
-from interaktiv.alttextgenerator.generator import generate_alt_text_suggestion
+from interaktiv.alttextgenerator.utils.generator import generate_alt_text_suggestion
 from interaktiv.alttextgenerator.helper import glob_matches
 from plone.registry import Registry
 from plone.registry.interfaces import IRegistry
