@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2025-11-28 14:44+0000\n"
+"POT-Creation-Date: 2025-12-05 11:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,17 +26,21 @@ msgstr "Alternativtext Generator"
 msgid "Alt Text Generator Settings"
 msgstr "Alternativtext Generator Einstellungen"
 
-#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:59
+#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:65
 msgid "Alt text generation is disabled for this content."
 msgstr "Die Alternativtextgeneriung ist für diesen Inhalt deaktiviert."
 
-#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:71
+#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:77
 msgid "Alt text generation is not supported for this file type."
 msgstr "Die Alternativtextgenerierung wird für diesen Dateityp nicht unterstützt."
 
 #: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:48
 msgid "Blacklisted paths"
 msgstr "Deaktivierte Pfade"
+
+#: interaktiv/alttextgenerator/profiles.zcml:30
+msgid "Generate alt texts for all images without alt texts."
+msgstr "Generiere Alternativtexte für allte Bilder ohne Alternativtexte."
 
 #: interaktiv/alttextgenerator/behaviors/configure.zcml:20
 msgid "Image Alt Text Metadata"
@@ -49,6 +53,10 @@ msgstr "Installiert die interaktiv.alttextgenerator Erweiterung."
 #: interaktiv/alttextgenerator/profiles.zcml:13
 msgid "Interaktiv Alt Text Generator: Install"
 msgstr "Interaktiv Alternativtextgenerator: Installieren"
+
+#: interaktiv/alttextgenerator/profiles.zcml:30
+msgid "Interaktiv Alt Text Generator: Migration"
+msgstr "Interaktiv Alternativtextgenerator: Migration"
 
 #: interaktiv/alttextgenerator/profiles.zcml:21
 msgid "Interaktiv Alt Text Generator: Uninstall"
