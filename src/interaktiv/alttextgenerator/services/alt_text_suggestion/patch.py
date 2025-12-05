@@ -1,6 +1,8 @@
+from interaktiv.aiclient.client import AIClientInitializationError
 from interaktiv.alttextgenerator import _
-from interaktiv.alttextgenerator.utils.generator import generate_alt_text_suggestion
+from interaktiv.alttextgenerator import logger
 from interaktiv.alttextgenerator.helper import glob_matches
+from interaktiv.alttextgenerator.utils.generator import generate_alt_text_suggestion
 from plone.registry import Registry
 from plone.registry.interfaces import IRegistry
 from plone.restapi.interfaces import ISerializeToJson
@@ -30,7 +32,12 @@ class AltTextSuggestionPatch(Service):
             self.request.response.setStatus(e.status)
             return {"message": e.message}
 
-        generate_alt_text_suggestion(self.context)
+        try:
+            generate_alt_text_suggestion(self.context)
+        except AIClientInitializationError as e:
+            self.request.response.setStatus(503)
+            logger.error(e)
+            return {"message": "This service is currently not available."}
 
         serializer = queryMultiAdapter((self.context, self.request), ISerializeToJson)
 
