@@ -22,6 +22,7 @@ class IAltTextMetadataBehavior(model.Schema):
         required=False,
         default=False,
     )
+    directives.order_after("alt_text")
 
     alt_text_model_used = schema.TextLine(
         title=_("alt_text_model_used_label", default="Model used"),
