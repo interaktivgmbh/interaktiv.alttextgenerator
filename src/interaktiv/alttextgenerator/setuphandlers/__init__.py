@@ -7,8 +7,12 @@ from interaktiv.alttexts.behaviors.alt_text import IAltTextMarker
 from plone import api
 from plone.app.contenttypes.content import Image
 from plone.base.interfaces import INonInstallable
+from plone.dexterity.fti import DexterityFTI
+from plone.dexterity.interfaces import IDexterityFTI
+from Products.GenericSetup.tool import SetupTool
 from Products.ZCatalog.CatalogBrains import AbstractCatalogBrain
 from typing import List
+from typing import Optional
 from zope.interface import implementer
 
 
@@ -32,7 +36,7 @@ def __has_empty_alt_text(obj) -> bool:
 
 
 # noinspection PyUnusedLocal
-def alt_text_migration(context) -> None:
+def alt_text_migration(context: Optional[SetupTool]) -> None:
     all_images = api.content.find(
         portal_type="Image",
         object_provides=(IAltTextMetadataMarker, IAltTextMarker),
@@ -55,3 +59,18 @@ def alt_text_migration(context) -> None:
             total_migrated += 1
 
     logger.info(f"{total_migrated} of {total_images} images migrated.")
+
+
+# noinspection PyUnusedLocal
+def post_uninstall(context: Optional[SetupTool]) -> None:
+    behavior_name = "interaktiv.alttextgenerator.behavior.alt_text_metadata"
+    portal_types = api.portal.get_tool("portal_types")
+
+    for portal_type in portal_types.keys():
+        fti: DexterityFTI = portal_types.get(portal_type)
+
+        if IDexterityFTI.providedBy(fti) and behavior_name in fti.behaviors:
+            behaviors = tuple(
+                behavior for behavior in fti.behaviors if behavior != behavior_name
+            )
+            fti.behaviors = behaviors

@@ -18,6 +18,7 @@
       description="Uninstalls the interaktiv.alttextgenerator add-on."
       provides="Products.GenericSetup.interfaces.EXTENSION"
       directory="profiles/uninstall"
+      post_handler=".setuphandlers.post_uninstall"
       />
 
   <genericsetup:registerProfile
