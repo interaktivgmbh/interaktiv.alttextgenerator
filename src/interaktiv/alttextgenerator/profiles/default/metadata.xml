@@ -3,5 +3,7 @@
   <version>1000</version>
   <dependencies>
     <dependency>profile-plone.volto:default</dependency>
+    <dependency>profile-interaktiv.aiclient:default</dependency>
+    <dependency>profile-interaktiv.alttexts:default</dependency>
   </dependencies>
 </metadata>
