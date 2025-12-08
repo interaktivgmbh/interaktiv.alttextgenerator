@@ -1,5 +1,8 @@
+from interaktiv.alttextgenerator import _
+from interaktiv.alttextgenerator.exc import ValidationError
 from io import BytesIO
-from PIL import Image
+from PIL import Image as PILImage
+from plone.app.contenttypes.content import Image
 from plone.namedfile.file import NamedBlobImage
 from plone.registry import Registry
 from plone.registry.interfaces import IRegistry
@@ -26,8 +29,8 @@ def b64_resized_image(image: NamedBlobImage, size: Tuple[int, int] = (512, 512))
             bytestring=image.data, output_width=size[0], output_height=size[1]
         )
     else:
-        img = Image.open(BytesIO(image.data))
-        img.thumbnail(size, resample=Image.Resampling.LANCZOS)
+        img = PILImage.open(BytesIO(image.data))
+        img.thumbnail(size, resample=PILImage.Resampling.LANCZOS)
 
         buffered = BytesIO()
         img.save(buffered, format="PNG")
@@ -95,3 +98,56 @@ def glob_matches(pattern: str, path: str) -> bool:
 
     regex = f"^{regex}$"
     return re.fullmatch(regex, path_to_match) is not None
+
+
+def check_generation_allowed(context: Image) -> None:
+    """
+    Checks if generation is allowed for a given image.
+
+    Parameters:
+        context (Image): The image object.
+
+    Raises:
+        ValidationError: If the path of the image matches any blacklisted path
+         patterns as defined in the Alt Text Generator Controlpanel.
+    """
+    registry: Registry = getUtility(IRegistry)
+    entry = "interaktiv.alttextgenerator.blacklisted_paths"
+    blacklist: List[str] = registry.get(entry, [])
+
+    if not blacklist:
+        return
+
+    content_path = "/".join(context.getPhysicalPath()[2:])
+
+    if not content_path.startswith("/"):
+        content_path = "/" + content_path
+
+    if any(glob_matches(glob, content_path) for glob in blacklist):
+        raise ValidationError(
+            _("Alt text generation is disabled for this content."), 409
+        )
+
+
+def check_whitelisted_mimetype(context: Image) -> None:
+    """
+    Checks if the mimetype of an image is whitelisted for further processing.
+
+    Parameters:
+        context (Image): The image object.
+
+    Raises:
+        ValidationError: If the mimetype of the image is not present in the
+         whitelisted image types as defined in the Alt Text Generator
+         Controlpanel.
+    """
+    mimetype: str = context.image.contentType
+
+    registry: Registry = getUtility(IRegistry)
+    entry = "interaktiv.alttextgenerator.whitelisted_image_types"
+    allowed_mimetypes: List[str] = registry.get(entry, [])
+
+    if mimetype not in allowed_mimetypes:
+        raise ValidationError(
+            _("Alt text generation is not supported for this file type."), 406
+        )
