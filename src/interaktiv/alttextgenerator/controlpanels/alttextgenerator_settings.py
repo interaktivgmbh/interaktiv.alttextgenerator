@@ -23,14 +23,6 @@ class IAltTextGeneratorSettings(Interface):
         required=True,
     )
 
-    target_language = schema.Choice(
-        title=_("Target language"),
-        description=_("The target language of alternative texts."),
-        required=True,
-        default="en",
-        vocabulary="plone.app.vocabularies.AvailableContentLanguages",
-    )
-
     whitelisted_image_types = schema.List(
         title=_("Whitelisted image types"),
         description=_(

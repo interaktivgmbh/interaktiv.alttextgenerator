@@ -2,7 +2,9 @@ from interaktiv.alttextgenerator import _
 from interaktiv.alttextgenerator.exc import ValidationError
 from io import BytesIO
 from PIL import Image as PILImage
+from plone import api
 from plone.app.contenttypes.content import Image
+from plone.dexterity.content import DexterityContent
 from plone.namedfile.file import NamedBlobImage
 from plone.registry import Registry
 from plone.registry.interfaces import IRegistry
@@ -10,6 +12,7 @@ from Products.CMFCore.utils import getToolByName
 from typing import Any
 from typing import Dict
 from typing import List
+from typing import Optional
 from typing import Tuple
 from zope.component import getUtility
 from zope.component.hooks import getSite
@@ -40,20 +43,32 @@ def b64_resized_image(image: NamedBlobImage, size: Tuple[int, int] = (512, 512))
     return f"data:image/png;base64,{image_base64}"
 
 
-def construct_prompt_with_image(b64_image: str) -> List[Dict[str, Any]]:
+def __get_prompts_from_registry(context: Image) -> Tuple[str, str]:
+    registry: Registry = getUtility(IRegistry)
+    system_prompt: Optional[str] = registry.get(
+        "interaktiv.alttextgenerator.system_prompt"
+    )
+    user_prompt: str = registry.get("interaktiv.alttextgenerator.user_prompt")
+
+    language = get_target_language(context)
+
+    # inject target language into the user prompt
+    user_prompt = user_prompt.format(language=language)
+
+    return system_prompt, user_prompt
+
+
+def construct_prompt_from_context(context: Image) -> List[Dict[str, Any]]:
     """
-    Constructs a prompt with the given base64 encoded image.
-    The prompt is ready to be passed into the AI Client's call method.
-    System and user prompts are retrieved from the registry.
+    Constructs a prompt from the Image context. The prompt is ready to be
+    passed into the AI Client's call method. System and user prompts are
+    retrieved from the registry.
     """
     result = []
-    registry: Registry = getUtility(IRegistry)
+    system_prompt, user_prompt = __get_prompts_from_registry(context)
 
-    system_prompt = registry.get("interaktiv.alttextgenerator.system_prompt")
-    user_prompt = registry.get("interaktiv.alttextgenerator.user_prompt")
-
-    language = get_target_language()
-    user_prompt = user_prompt.format(language=language)
+    image: NamedBlobImage = context.image
+    image_base64 = b64_resized_image(image)
 
     if system_prompt:
         result.append({"role": "system", "content": system_prompt})
@@ -62,16 +77,15 @@ def construct_prompt_with_image(b64_image: str) -> List[Dict[str, Any]]:
         "role": "user",
         "content": [
             {"type": "text", "text": user_prompt},
-            {"type": "image_url", "image_url": {"url": b64_image}},
+            {"type": "image_url", "image_url": {"url": image_base64}},
         ],
     })
 
     return result
 
 
-def get_target_language() -> str:
-    registry: Registry = getUtility(IRegistry)
-    target_language = registry.get("interaktiv.alttextgenerator.target_language")
+def get_target_language(context: DexterityContent) -> str:
+    target_language = api.portal.get_current_language(context)
 
     # see plone.app.vocabularies.language.AvailableContentLanguageVocabulary
     site = getSite()
