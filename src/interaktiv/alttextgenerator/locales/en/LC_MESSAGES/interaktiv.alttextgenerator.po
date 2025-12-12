@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2025-12-05 11:54+0000\n"
+"POT-Creation-Date: 2025-12-12 12:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,23 +22,23 @@ msgstr ""
 msgid "Alt Text Generator"
 msgstr ""
 
-#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:64
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:56
 msgid "Alt Text Generator Settings"
 msgstr ""
 
-#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:65
+#: interaktiv/alttextgenerator/helper.py:142
 msgid "Alt text generation is disabled for this content."
 msgstr ""
 
-#: interaktiv/alttextgenerator/services/alt_text_suggestion/patch.py:77
+#: interaktiv/alttextgenerator/helper.py:166
 msgid "Alt text generation is not supported for this file type."
 msgstr ""
 
-#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:48
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:40
 msgid "Blacklisted paths"
 msgstr ""
 
-#: interaktiv/alttextgenerator/profiles.zcml:30
+#: interaktiv/alttextgenerator/profiles.zcml:31
 msgid "Generate alt texts for all images without alt texts."
 msgstr ""
 
@@ -54,15 +54,15 @@ msgstr ""
 msgid "Interaktiv Alt Text Generator: Install"
 msgstr ""
 
-#: interaktiv/alttextgenerator/profiles.zcml:30
+#: interaktiv/alttextgenerator/profiles.zcml:31
 msgid "Interaktiv Alt Text Generator: Migration"
 msgstr ""
 
-#: interaktiv/alttextgenerator/profiles.zcml:21
+#: interaktiv/alttextgenerator/profiles.zcml:22
 msgid "Interaktiv Alt Text Generator: Uninstall"
 msgstr ""
 
-#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:49
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:41
 msgid "List of paths for which alt text generation should be disabled. Use * for one segment or any amount of characters inside a segment, ** for multiple segments, and ? for a single character. Segments are separated using /."
 msgstr ""
 
@@ -70,11 +70,7 @@ msgstr ""
 msgid "System Prompt"
 msgstr ""
 
-#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:27
-msgid "Target language"
-msgstr ""
-
-#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:36
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:28
 msgid "The images types that are supported for generation of alt texts."
 msgstr ""
 
@@ -82,15 +78,11 @@ msgstr ""
 msgid "The system prompt used for alt text generation."
 msgstr ""
 
-#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:28
-msgid "The target language of alternative texts."
-msgstr ""
-
 #: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:20
 msgid "The user prompt used for alt text generation. Use {language} to specify the target language."
 msgstr ""
 
-#: interaktiv/alttextgenerator/profiles.zcml:21
+#: interaktiv/alttextgenerator/profiles.zcml:22
 msgid "Uninstalls the interaktiv.alttextgenerator add-on."
 msgstr ""
 
@@ -98,7 +90,7 @@ msgstr ""
 msgid "User Prompt"
 msgstr ""
 
-#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:35
+#: interaktiv/alttextgenerator/controlpanels/alttextgenerator_settings.py:27
 msgid "Whitelisted image types"
 msgstr ""
 
@@ -108,21 +100,21 @@ msgid "alt_text_ai_generated_label"
 msgstr ""
 
 #. Default: "The date at which the alt text was generated."
-#: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:39
+#: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:40
 msgid "alt_text_generation_date_description"
 msgstr ""
 
 #. Default: "Date of generation"
-#: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:38
+#: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:39
 msgid "alt_text_generation_date_label"
 msgstr ""
 
 #. Default: "The model used to generate the alt text."
-#: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:28
+#: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:29
 msgid "alt_text_model_used_description"
 msgstr ""
 
 #. Default: "Model used"
-#: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:27
+#: interaktiv/alttextgenerator/behaviors/alt_text_metadata.py:28
 msgid "alt_text_model_used_label"
 msgstr ""
