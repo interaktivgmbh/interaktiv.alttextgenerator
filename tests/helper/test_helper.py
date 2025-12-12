@@ -1,8 +1,11 @@
+from interaktiv.alttextgenerator.exc import ValidationError
+from interaktiv.alttextgenerator.helper import check_generation_allowed
+from interaktiv.alttextgenerator.helper import check_whitelisted_mimetype
+from interaktiv.alttextgenerator.helper import construct_prompt_from_context
+from interaktiv.alttextgenerator.helper import glob_matches
 from plone import api
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
-from interaktiv.alttextgenerator.exc import ValidationError
-from interaktiv.alttextgenerator.helper import glob_matches, construct_prompt_from_context, check_whitelisted_mimetype, check_generation_allowed
 from plone.namedfile.file import NamedImage
 from Products.CMFPlone.tests import dummy
 
@@ -77,7 +80,9 @@ class TestHelper:
             container=portal,
             image=NamedImage(dummy.JpegImage(), "image/jpeg", "test.jpeg"),
         )
-        api.portal.set_registry_record("interaktiv.alttextgenerator.user_prompt", "User Prompt")
+        api.portal.set_registry_record(
+            "interaktiv.alttextgenerator.user_prompt", "User Prompt"
+        )
         api.portal.set_registry_record("interaktiv.alttextgenerator.system_prompt", "")
 
         # do it
@@ -97,7 +102,9 @@ class TestHelper:
         assert image_item["image_url"]["url"].startswith("data:image/")
 
         # test that the system prompt is included if a value is set
-        api.portal.set_registry_record("interaktiv.alttextgenerator.system_prompt", "System Prompt")
+        api.portal.set_registry_record(
+            "interaktiv.alttextgenerator.system_prompt", "System Prompt"
+        )
 
         prompt = construct_prompt_from_context(image)
 
@@ -129,11 +136,12 @@ class TestHelper:
         check_generation_allowed(image)
 
         # blacklist all items starting with "test-"
-        api.portal.set_registry_record("interaktiv.alttextgenerator.blacklisted_paths", ["test-*"])
+        api.portal.set_registry_record(
+            "interaktiv.alttextgenerator.blacklisted_paths", ["test-*"]
+        )
 
         with pytest.raises(ValidationError):
             check_generation_allowed(image)
-
 
     def test_check_whitelisted_mimetypes(self, portal):
         # setup
