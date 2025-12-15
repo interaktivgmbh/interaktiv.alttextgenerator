@@ -3,7 +3,6 @@ from interaktiv.alttextgenerator.behaviors.alt_text_metadata import (
     IAltTextMetadataMarker,
 )
 from interaktiv.alttextgenerator.exc import ValidationError
-from interaktiv.alttextgenerator.filters import has_empty_alt_texts
 from interaktiv.alttextgenerator.helper import check_generation_allowed
 from interaktiv.alttextgenerator.helper import check_whitelisted_mimetype
 from interaktiv.alttextgenerator.utils.generator import generate_alt_text_suggestion
@@ -36,10 +35,15 @@ class HiddenProfiles:
         ]
 
 
+def _has_empty_alt_texts(obj: Image) -> bool:
+    alt_text = obj.alt_text.strip() if obj.alt_text else None
+    return not alt_text
+
+
 # noinspection PyUnusedLocal
 def alt_text_migration(
     context: Optional[SetupTool],
-    filter_function: Callable[[Image], bool] = has_empty_alt_texts,
+    filter_function: Callable[[Image], bool] = _has_empty_alt_texts,
 ) -> None:
     """
     Generate alternative texts for all images implementing IAltTextBehavior
@@ -49,8 +53,8 @@ def alt_text_migration(
     Parameters:
         context (Optional[SetupTool]): The SetupTool context. (unused)
         filter_function (Callable[[Image], bool]): A function used to filter
-         images for processing. Defaults to ``has_empty_alt_texts`` from
-         ``interaktiv.alttextgenerator.filters``.
+         images for processing. By default, this will filter by images with
+         empty alt texts.
 
     """
     all_images = api.content.find(
