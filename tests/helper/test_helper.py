@@ -40,6 +40,9 @@ class TestHelper:
             {"path": "/d/test", "glob": "/?/test", "match": True},
             {"path": "/de/test", "glob": "/?/test", "match": False},
             {"path": "/ab/test", "glob": "/??/test", "match": True},
+            {"path": "/de/test", "glob": "/de/tes?", "match": True},
+            {"path": "/de/test", "glob": "/de/t?st", "match": True},
+            {"path": "/de/tes", "glob": "/de/tes?", "match": False},
             # File extensions
             {"path": "/de/test/image.png", "glob": "/de/test/*.png", "match": True},
             {"path": "/de/test/image.jpg", "glob": "/de/test/*.png", "match": False},
@@ -60,6 +63,9 @@ class TestHelper:
             {"path": "/a/b/c", "glob": "/a/*/c", "match": True},
             {"path": "/a/b/c/d", "glob": "/a/*/c", "match": False},
             {"path": "/a/b/c/d", "glob": "/a/*/**", "match": True},
+            {"path": "/de/file.extension", "glob": "/de/*.*", "match": True},
+            {"path": "/de/.", "glob": "/de/*.*", "match": True},
+            {"path": "/de/file.extension", "glob": "/de/*:*", "match": False},
             # Recursive with file extensions
             {"path": "/a/b/c/image.png", "glob": "/a/**/*.png", "match": True},
             {"path": "/a/b/c/d/image.png", "glob": "/a/**/*.png", "match": True},

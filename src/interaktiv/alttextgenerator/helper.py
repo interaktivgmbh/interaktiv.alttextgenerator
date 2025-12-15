@@ -97,21 +97,28 @@ def get_target_language(context: DexterityContent) -> str:
 
 def glob_matches(pattern: str, path: str) -> bool:
     """Match a web path against a glob pattern."""
-    # Normalize path for relative patterns
-    path_to_match = path.lstrip("/") if not pattern.startswith("/") else path
+    if path != "/":
+        path = path.lstrip("/")
+        path = path.rstrip("/")
+
+    if pattern != "/":
+        pattern = pattern.lstrip("/")
+
     regex = re.escape(pattern)
 
-    # Handle wildcards
-    regex = regex.replace(r"\*\*", ".*")  # ** -> zero or more segments
-    regex = regex.replace(r"\*", "[^/]+")  # * -> exactly one segment
-    regex = regex.replace(r"\?", ".")  # ? -> any single character
+    # ** -> zero or more segments
+    regex = regex.replace(r"\*\*", ".*")
+    # * -> zero or more characters inside a segment
+    regex = regex.replace(r"\*", "[^/]*")
+    # ? -> exactly one character
+    regex = regex.replace(r"\?", ".")
 
     # Special case: trailing /** should match path with or without trailing slash
     if regex.endswith("/.*"):
         regex = regex[:-3] + "(/.*)?"
 
     regex = f"^{regex}$"
-    return re.fullmatch(regex, path_to_match) is not None
+    return re.fullmatch(regex, path) is not None
 
 
 def check_generation_allowed(context: Image) -> None:
