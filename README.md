@@ -15,7 +15,7 @@ This add-on requires `interaktiv.aiclient` for its AI capabilities and
 `interaktiv.alttexts` to provide the alt text behaviour.
 
 Currently, this add-on only works out of the box with Volto. Therefore, you
-should also install the according Volto plugin [volto-interaktiv-alttextgenerator](https://github.com/interaktivgmbh/volto-interaktiv-alttextgenerator)
+should also install the according Volto plugin [volto-interaktiv-alttextgenerator](https://github.com/interaktivgmbh/volto-interaktiv-alttextgenerator).
 
 ## Features
 
@@ -90,9 +90,44 @@ Now all patterns can be described precisely:
 | `/private/**`       | `/private/user/data/file.png` | ✅        | Matches any file under `/private/`.                |
 | `**`                | `/de/user/profile.png`        | ✅        | `**` deactivates generation globally.              |
 
+### Migrate existing images
+
+Chances are, you already have a few images on your Plone site and want to
+generate alt texts for them as well.
+
+To generate alt texts for existing images without alt texts, you can run the
+`Interaktiv Alt Text Generator: Migration` profile from the Zope Management
+Interface. Beware, this will update every image, so this process may take a while.
+
+![Alt Text Generator Migration Profile](docs/migration.png)
+
+The logger will keep you up to date with the current progress of the migration.
+
+```terminaloutput
+INFO    [interaktiv.alttextgenerator:74][waitress-1] Image 1 of 2 queued for migration.
+INFO    [httpx:1025][waitress-1] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+INFO    [interaktiv.alttextgenerator:74][waitress-1] Image 2 of 2 queued for migration.
+INFO    [httpx:1025][waitress-1] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+INFO    [interaktiv.alttextgenerator:90][waitress-1] 2 of 2 images migrated.
+```
+
 ## Adding this add-on to your project
 
-In your `mx.ini` file, add:
+Install the add-on using `pip`:
+
+```shell
+pip install interaktiv.alttextgenerator
+```
+
+or if you're using uv:
+
+```shell
+uv pip install interaktiv.alttextgenerator
+```
+
+### Install from source
+
+You can also install the add-on from the source. In your `mx.ini` file, add:
 
 ```ini
 [interaktiv.aiclient]
