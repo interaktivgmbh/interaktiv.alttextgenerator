@@ -95,7 +95,7 @@ def post_uninstall(context: Optional[SetupTool]) -> None:
     behavior_name = "interaktiv.alttextgenerator.behavior.alt_text_metadata"
     portal_types = api.portal.get_tool("portal_types")
 
-    for portal_type in portal_types.keys():
+    for portal_type in portal_types:
         fti: DexterityFTI = portal_types.get(portal_type)
 
         if IDexterityFTI.providedBy(fti) and behavior_name in fti.behaviors:

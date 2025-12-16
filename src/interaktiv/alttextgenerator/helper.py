@@ -23,7 +23,9 @@ import re
 
 
 def b64_resized_image(image: NamedBlobImage, size: Tuple[int, int] = (512, 512)) -> str:
-    """Resizes the image to the given size and converts it to a base64 encoded PNG string."""
+    """
+    Resizes the image to the given size and converts it to a base64 encoded PNG string.
+    """
     image_mimetype = image.contentType
 
     # svgs are not supported by the OpenRouter API; therefore, they must be converted

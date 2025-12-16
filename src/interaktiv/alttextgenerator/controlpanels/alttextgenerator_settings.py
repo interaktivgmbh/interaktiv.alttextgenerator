@@ -18,7 +18,8 @@ class IAltTextGeneratorSettings(Interface):
     user_prompt = schema.Text(
         title=_("User Prompt"),
         description=_(
-            "The user prompt used for alt text generation. Use {language} to specify the target language."
+            "The user prompt used for alt text generation. "
+            "Use {language} to specify the target language."
         ),
         required=True,
     )
