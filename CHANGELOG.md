@@ -8,3 +8,10 @@
 -->
 
 <!-- towncrier release notes start -->
+
+## 1.0.0 (2025-12-16)
+
+
+### Internal:
+
+- Initial release. @arybakov05 [#1](https://github.com/interaktivgmbh/interaktiv.alttextgenerator/issues/1)

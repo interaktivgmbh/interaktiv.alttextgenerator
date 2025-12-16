@@ -1,0 +1,16 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    >
+
+  <plone:service
+      method="PATCH"
+      factory=".patch.AltTextSuggestionPatch"
+      for="plone.app.contenttypes.interfaces.IImage"
+      permission="cmf.ModifyPortalContent"
+      layer="interaktiv.alttextgenerator.interfaces.IInteraktivAltTextGeneratorBrowserLayer"
+      name="@alt_text_suggestion"
+      />
+
+
+</configure>

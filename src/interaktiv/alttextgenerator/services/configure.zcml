@@ -1,0 +1,5 @@
+<configure>
+
+  <include package=".alt_text_suggestion" />
+
+</configure>

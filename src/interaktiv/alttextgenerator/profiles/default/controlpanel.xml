@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<object name="portal_controlpanel">
+<object xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+        name="portal_controlpanel"
+        i18n:domain="interaktiv.alttextgenerator"
+>
 
-  <!-- -*- extra stuff goes here -*- -->
+  <configlet action_id="alttextgenerator-controlpanel"
+             appId="interaktiv.alttextgenerator"
+             category="Products"
+             condition_expr=""
+             icon_expr=""
+             title="Alt Text Generator"
+             url_expr="string:${portal_url}/@@alttextgenerator-controlpanel"
+             visible="True"
+             i18n:attributes="title"
+  >
+    <permission>Manage portal</permission>
+  </configlet>
 
 </object>

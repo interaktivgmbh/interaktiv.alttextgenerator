@@ -1,0 +1,22 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="interaktiv.alttextgenerator"
+    >
+
+  <include
+      package="plone.behavior"
+      file="meta.zcml"
+      />
+
+  <plone:behavior
+      name="interaktiv.alttextgenerator.behavior.alt_text_metadata"
+      title="Image Alt Text Metadata"
+      description="Adds Image Alt Text Metadata Behavior"
+      factory=".alt_text_metadata.AltTextMetadataAdapter"
+      provides=".alt_text_metadata.IAltTextMetadataBehavior"
+      for=".alt_text_metadata.IAltTextMetadataMarker"
+      marker=".alt_text_metadata.IAltTextMetadataMarker"
+      />
+
+</configure>

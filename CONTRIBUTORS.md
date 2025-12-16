@@ -1,3 +1,4 @@
 # Contributors
 
-- Interaktiv GmbH [info@interaktiv.de]
+- Alexander Rybakov [rybakov@interaktiv.de]
+- Marcel Liebischer [liebischer@interaktiv.de]

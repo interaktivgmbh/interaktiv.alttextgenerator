@@ -7,7 +7,7 @@
   <genericsetup:registerProfile
       name="default"
       title="Interaktiv Alt Text Generator: Install"
-      description="Package to configure a new Interaktiv Alt Text Generator site"
+      description="Installs the interaktiv.alttextgenerator add-on."
       provides="Products.GenericSetup.interfaces.EXTENSION"
       directory="profiles/default"
       />
@@ -15,9 +15,19 @@
   <genericsetup:registerProfile
       name="uninstall"
       title="Interaktiv Alt Text Generator: Uninstall"
-      description="Uninstall Interaktiv Alt Text Generator setup."
+      description="Uninstalls the interaktiv.alttextgenerator add-on."
       provides="Products.GenericSetup.interfaces.EXTENSION"
       directory="profiles/uninstall"
+      post_handler=".setuphandlers.post_uninstall"
+      />
+
+  <genericsetup:registerProfile
+      name="migration"
+      title="Interaktiv Alt Text Generator: Migration"
+      description="Generate alt texts for all images without alt texts."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      directory="profiles/migration"
+      post_handler=".setuphandlers.alt_text_migration"
       />
 
   <!-- Hide Uninstall Profile-->

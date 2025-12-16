@@ -3,8 +3,12 @@ from zope.interface import implementer
 
 
 @implementer(IJSONSummarySerializerMetadata)
-class JSONSummarySerializerMetadata:
+class AltTextGeneratorJSONSummarySerializerMetadata:
     """Additional metadata to be exposed on listings."""
 
     def default_metadata_fields(self):
-        return {"image_field", "image_scales", "effective", "Subject"}
+        return {
+            "alt_text_ai_generated",
+            "alt_text_model_used",
+            "alt_text_generation_date",
+        }

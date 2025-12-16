@@ -1,7 +1,18 @@
 <configure xmlns="http://namespaces.zope.org/zope">
 
-  <!-- Indexers/Metadata -->
+  <adapter
+      factory=".alt_text_metadata.alt_text_ai_generated_indexer"
+      name="alt_text_ai_generated"
+      />
 
-  <!-- -*- extra stuff goes here -*- -->
+  <adapter
+      factory=".alt_text_metadata.alt_text_model_used_indexer"
+      name="alt_text_model_used"
+      />
+
+  <adapter
+      factory=".alt_text_metadata.alt_text_generation_date_indexer"
+      name="alt_text_generation_date"
+      />
 
 </configure>
