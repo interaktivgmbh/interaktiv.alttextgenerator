@@ -1,5 +1,7 @@
 # interaktiv.alttextgenerator
 
+[![interaktiv.alttextgenerator CI](https://github.com/interaktivgmbh/interaktiv.alttextgenerator/actions/workflows/ci.yml/badge.svg)](https://github.com/interaktivgmbh/interaktiv.alttextgenerator/actions/workflows/ci.yml)
+
 Generate alternative texts for images.
 
 This add-on helps editors provide meaningful alt texts for images using AI,
