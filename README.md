@@ -57,7 +57,7 @@ All alt texts are generated in the site's language. This behaviour is specified
 in the default user prompt. If you specify `{language}` inside your user prompt,
 it will be replaced with the site language internally. If you wish to use a
 specific language for the alt texts, you can leave out `{language}` and specify
-your own language directly in the user prompt.
+your own language directly inside the user prompt.
 
 ### Blacklisting paths
 
@@ -86,9 +86,9 @@ Now all patterns can be described precisely:
 | `/images/*`         | `/de/images/icons/logo.png`   | ❌        | Only matches a single segment under `/images/`.    |
 | `/images/**`        | `/de/images/icons/logo.png`   | ✅        | `**` matches files in nested folders.              |
 | `/media/photo?.jpg` | `/de/media/photo1.jpg`        | ✅        | `?` matches exactly one character in the filename. |
-| `/media/photo?.jpg` | `/de/media/photo12.jpg`       | ❌        | `?` only matches a single character.               |
+| `/media/photo?.jpg` | `/de/media/photo12.jpg`       | ❌        | `?` matches only a single character.               |
 | `/private/**`       | `/private/user/data/file.png` | ✅        | Matches any file under `/private/`.                |
-| `**`                | `/de/user/profile.png`        | ✅        | `**` deactivates generation globally.              |
+| `**`                | `/de/user/profile.png`        | ✅        | Deactivates generation globally.                   |
 
 ### Migrate existing images
 
