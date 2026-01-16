@@ -9,6 +9,13 @@
 
 <!-- towncrier release notes start -->
 
+## 1.0.1 (2026-01-16)
+
+
+### Bug fixes:
+
+- Fix CMYK color space conversion error. @arybakov05 [#8](https://github.com/interaktivgmbh/interaktiv.alttextgenerator/issues/8)
+
 ## 1.0.0 (2025-12-16)
 
 
