@@ -3,3 +3,7 @@ class ValidationError(Exception):
         super().__init__(message)
         self.message = message
         self.status = status
+
+
+class ImageResizeError(Exception):
+    pass

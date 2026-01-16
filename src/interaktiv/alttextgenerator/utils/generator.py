@@ -2,6 +2,8 @@ from datetime import datetime
 from interaktiv.aiclient.client import AIClient
 from interaktiv.aiclient.helper import get_model_name_from_slug
 from interaktiv.aiclient.interfaces import IAIClient
+from interaktiv.alttextgenerator import logger
+from interaktiv.alttextgenerator.exc import ImageResizeError
 from interaktiv.alttextgenerator.helper import construct_prompt_from_context
 from plone.app.contenttypes.content import Image
 from zope.component import getUtility
@@ -10,7 +12,13 @@ from zope.lifecycleevent import modified
 
 def generate_alt_text_suggestion(context: Image) -> bool:
     """Generate and update image alt text and metadata for the given context."""
-    prompt = construct_prompt_from_context(context)
+    try:
+        prompt = construct_prompt_from_context(context)
+    except ImageResizeError as e:
+        logger.error(
+            f"Failed to generate alt text suggestion for image {context.id}: {e}"
+        )
+        return False
 
     ai_client: AIClient = getUtility(IAIClient)
     alt_text = ai_client.call(prompt)
