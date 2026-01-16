@@ -1,4 +1,5 @@
 from interaktiv.alttextgenerator import _
+from interaktiv.alttextgenerator.exc import ImageResizeError
 from interaktiv.alttextgenerator.exc import ValidationError
 from io import BytesIO
 from PIL import Image as PILImage
@@ -22,6 +23,15 @@ import cairosvg
 import re
 
 
+# see https://openrouter.ai/docs/guides/overview/multimodal/images
+IMAGE_INPUT_TYPES = [
+    "image/png",
+    "image/jpeg",
+    "image/webp",
+    "image/gif",
+]
+
+
 def b64_resized_image(image: NamedBlobImage, size: Tuple[int, int] = (512, 512)) -> str:
     """
     Resizes the image to the given size and converts it to a base64 encoded PNG string.
@@ -37,12 +47,19 @@ def b64_resized_image(image: NamedBlobImage, size: Tuple[int, int] = (512, 512))
         img = PILImage.open(BytesIO(image.data))
         img.thumbnail(size, resample=PILImage.Resampling.LANCZOS)
 
+        img_format = img.format
+        image_mimetype = img.get_format_mimetype()
+
+        if image_mimetype not in IMAGE_INPUT_TYPES:
+            img_format = "PNG"
+            image_mimetype = "image/png"
+
         buffered = BytesIO()
-        img.save(buffered, format="PNG")
+        img.save(buffered, format=img_format)
         image_bytes = buffered.getvalue()
 
     image_base64 = base64.b64encode(image_bytes).decode("utf-8")
-    return f"data:image/png;base64,{image_base64}"
+    return f"data:{image_mimetype};base64,{image_base64}"
 
 
 def __get_prompts_from_registry(context: Image) -> Tuple[str, str]:
@@ -70,7 +87,10 @@ def construct_prompt_from_context(context: Image) -> List[Dict[str, Any]]:
     system_prompt, user_prompt = __get_prompts_from_registry(context)
 
     image: NamedBlobImage = context.image
-    image_base64 = b64_resized_image(image)
+    try:
+        image_base64 = b64_resized_image(image)
+    except (ValueError, OSError) as e:
+        raise ImageResizeError(e) from e
 
     if system_prompt:
         result.append({"role": "system", "content": system_prompt})
