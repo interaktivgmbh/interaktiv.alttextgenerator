@@ -19,6 +19,11 @@ from typing import List
 from typing import Optional
 from zope.interface import implementer
 
+import transaction
+
+
+BATCH_SIZE = 100
+
 
 @implementer(INonInstallable)
 class HiddenProfiles:
@@ -80,12 +85,22 @@ def alt_text_migration(
             check_whitelisted_mimetype(obj)
         except ValidationError as e:
             logger.error(e)
-            return
+            continue
 
         did_update = generate_alt_text_suggestion(obj)
 
         if did_update:
             total_migrated += 1
+
+            if total_migrated % BATCH_SIZE == 0:
+                transaction.commit()
+                logger.info(f"Committed changes to {BATCH_SIZE} images.")
+
+    remainder = total_migrated % BATCH_SIZE
+
+    if remainder > 0:
+        transaction.commit()
+        logger.info(f"Committed changes to {remainder} images.")
 
     logger.info(f"{total_migrated} of {total_images} images migrated.")
 
