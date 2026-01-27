@@ -99,18 +99,27 @@ generate alt texts for them as well.
 
 To generate alt texts for existing images without alt texts, you can run the
 `Interaktiv Alt Text Generator: Migration` profile from the Zope Management
-Interface. Beware, this will update every image, so this process may take a while.
+Interface. Beware, this will update every image, so this process may take a
+while.
 
 ![Alt Text Generator Migration Profile](docs/migration.png)
+
+The images are processed in batches, the size of which can be configured in the
+control panel.
 
 The logger will keep you up to date with the current progress of the migration.
 
 ```terminaloutput
-INFO    [interaktiv.alttextgenerator:74][waitress-1] Image 1 of 2 queued for migration.
-INFO    [httpx:1025][waitress-1] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
-INFO    [interaktiv.alttextgenerator:74][waitress-1] Image 2 of 2 queued for migration.
-INFO    [httpx:1025][waitress-1] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
-INFO    [interaktiv.alttextgenerator:90][waitress-1] 2 of 2 images migrated.
+...
+INFO    [interaktiv.alttextgenerator:89][waitress-3] Processing 10 images.
+INFO    [httpx:1740][waitress-3] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+...
+INFO    [interaktiv.alttextgenerator:94][waitress-3] Committed changes to 10 images.
+INFO    [interaktiv.alttextgenerator:99][waitress-3] Processing 8 images.
+INFO    [httpx:1740][waitress-3] HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+...
+INFO    [interaktiv.alttextgenerator:104][waitress-3] Committed changes to 8 images.
+INFO    [interaktiv.alttextgenerator:106][waitress-3] 108 of total 108 images migrated.
 ```
 
 ## Adding this add-on to your project
@@ -132,18 +141,18 @@ uv pip install interaktiv.alttextgenerator
 You can also install the add-on from the source. In your `mx.ini` file, add:
 
 ```ini
-[interaktiv.aiclient]
+[interaktiv.alttextgenerator]
 url = git@github.com:interaktivgmbh/interaktiv.alttextgenerator.git
-rev = v1.0.0
+rev = v1.1.0
 extras = test
 ```
 
 Or using https:
 
 ```ini
-[interaktiv.aiclient]
+[interaktiv.alttextgenerator]
 url = https://github.com/interaktivgmbh/interaktiv.alttextgenerator.git
-rev = v1.0.0
+rev = v1.1.0
 extras = test
 ```
 

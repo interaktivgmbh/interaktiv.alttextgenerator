@@ -23,7 +23,11 @@ class AltTextSuggestionPatch(Service):
             return {"message": e.message}
 
         try:
-            generate_alt_text_suggestion(self.context)
+            success = generate_alt_text_suggestion(self.context)
+
+            if not success:
+                self.request.response.setStatus(500)
+                return {"message": "Failed to generate alt text suggestion."}
         except AIClientInitializationError as e:
             self.request.response.setStatus(503)
             logger.error(e)

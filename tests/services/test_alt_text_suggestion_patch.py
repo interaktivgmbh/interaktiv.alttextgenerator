@@ -53,7 +53,7 @@ class TestAltTextSuggestionPatch:
         self, mock_generate_suggestion, service
     ):
         # setup
-        mock_generate_suggestion.return_value = None
+        mock_generate_suggestion.return_value = True
         api.portal.set_registry_record(
             "interaktiv.alttextgenerator.blacklisted_paths", []
         )
@@ -71,7 +71,7 @@ class TestAltTextSuggestionPatch:
         self, mock_generate_suggestion, service
     ):
         # setup
-        mock_generate_suggestion.return_value = None
+        mock_generate_suggestion.return_value = True
         whitelisted_mimetypes = api.portal.get_registry_record(
             "interaktiv.alttextgenerator.whitelisted_image_types", default=[]
         )
@@ -84,6 +84,45 @@ class TestAltTextSuggestionPatch:
 
         # post condition
         assert service.request.response.status == 200
+
+    @mock.patch(
+        "interaktiv.alttextgenerator.services.alt_text_suggestion.patch.generate_alt_text_suggestion"
+    )
+    def test_alt_text_suggestion_patch__checks_blacklist__excluded__failed(
+        self, mock_generate_suggestion, service
+    ):
+        # setup
+        mock_generate_suggestion.return_value = False
+        api.portal.set_registry_record(
+            "interaktiv.alttextgenerator.blacklisted_paths", []
+        )
+
+        # do it
+        service.reply()
+
+        # post condition
+        assert service.request.response.status == 500
+
+    @mock.patch(
+        "interaktiv.alttextgenerator.services.alt_text_suggestion.patch.generate_alt_text_suggestion"
+    )
+    def test_alt_text_suggestion_patch__checks_mimetype__included__failed(
+        self, mock_generate_suggestion, service
+    ):
+        # setup
+        mock_generate_suggestion.return_value = False
+        whitelisted_mimetypes = api.portal.get_registry_record(
+            "interaktiv.alttextgenerator.whitelisted_image_types", default=[]
+        )
+
+        # pre condition
+        assert "image/jpeg" in whitelisted_mimetypes
+
+        # do it
+        service.reply()
+
+        # post condition
+        assert service.request.response.status == 500
 
     @mock.patch(
         "interaktiv.alttextgenerator.services.alt_text_suggestion.patch.generate_alt_text_suggestion"

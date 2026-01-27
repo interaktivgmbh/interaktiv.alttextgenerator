@@ -9,16 +9,20 @@ from unittest import mock
 
 class TestSetuphandlers:
     @staticmethod
-    def set_image_alt(image):
-        image.alt_text = f"Alt text for {image.id}"
-        return True
+    def set_image_alt_batch(batch):
+        for image in batch:
+            image.alt_text = f"Alt text for {image.id}"
+        return len(batch)
 
+    @mock.patch("interaktiv.alttextgenerator.setuphandlers.transaction.commit")
     @mock.patch(
-        "interaktiv.alttextgenerator.setuphandlers.generate_alt_text_suggestion"
+        "interaktiv.alttextgenerator.setuphandlers.generate_alt_text_suggestion_batch"
     )
-    def test_alt_text_migration(self, mock_generate_suggestion, portal):
+    def test_alt_text_migration(
+        self, mock_generate_suggestion_batch, mock_commit, portal
+    ):
         # setup
-        mock_generate_suggestion.side_effect = self.set_image_alt
+        mock_generate_suggestion_batch.side_effect = self.set_image_alt_batch
         setRoles(portal, TEST_USER_ID, ["Manager"])
         image1 = api.content.create(
             type="Image",
@@ -40,12 +44,15 @@ class TestSetuphandlers:
         assert image1.alt_text == "Alt text for test-image1"
         assert image2.alt_text == "Alt text for test-image2"
 
+    @mock.patch("interaktiv.alttextgenerator.setuphandlers.transaction.commit")
     @mock.patch(
-        "interaktiv.alttextgenerator.setuphandlers.generate_alt_text_suggestion"
+        "interaktiv.alttextgenerator.setuphandlers.generate_alt_text_suggestion_batch"
     )
-    def test_alt_text_migration__not_all_empty(self, mock_generate_suggestion, portal):
+    def test_alt_text_migration__not_all_empty(
+        self, mock_generate_suggestion_batch, mock_commit, portal
+    ):
         # setup
-        mock_generate_suggestion.side_effect = self.set_image_alt
+        mock_generate_suggestion_batch.side_effect = self.set_image_alt_batch
         setRoles(portal, TEST_USER_ID, ["Manager"])
         image1 = api.content.create(
             type="Image",
@@ -69,11 +76,13 @@ class TestSetuphandlers:
         assert image2.alt_text == "Alt text for test-image2"
 
     @mock.patch(
-        "interaktiv.alttextgenerator.setuphandlers.generate_alt_text_suggestion"
+        "interaktiv.alttextgenerator.setuphandlers.generate_alt_text_suggestion_batch"
     )
-    def test_alt_text_migration__with_checks(self, mock_generate_suggestion, portal):
+    def test_alt_text_migration__with_checks(
+        self, mock_generate_suggestion_batch, portal
+    ):
         # setup
-        mock_generate_suggestion.side_effect = self.set_image_alt
+        mock_generate_suggestion_batch.side_effect = self.set_image_alt_batch
         setRoles(portal, TEST_USER_ID, ["Manager"])
         image1 = api.content.create(
             type="Image",

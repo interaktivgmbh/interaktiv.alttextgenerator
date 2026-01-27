@@ -36,7 +36,7 @@ dependencies = [
     "plone.restapi",
     "plone.volto",
     "CairoSVG==2.7.1",
-    "interaktiv.aiclient==1.0.0",
+    "interaktiv.aiclient==1.1.0",
     "interaktiv.alttexts==1.0.0",
 ]
 
