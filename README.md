@@ -143,7 +143,7 @@ You can also install the add-on from the source. In your `mx.ini` file, add:
 ```ini
 [interaktiv.alttextgenerator]
 url = git@github.com:interaktivgmbh/interaktiv.alttextgenerator.git
-rev = v1.0.1
+rev = v1.1.0
 extras = test
 ```
 
@@ -152,7 +152,7 @@ Or using https:
 ```ini
 [interaktiv.alttextgenerator]
 url = https://github.com/interaktivgmbh/interaktiv.alttextgenerator.git
-rev = v1.0.1
+rev = v1.1.0
 extras = test
 ```
 
