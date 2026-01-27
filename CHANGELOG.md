@@ -9,6 +9,18 @@
 
 <!-- towncrier release notes start -->
 
+## 1.1.0 (2026-01-27)
+
+
+### New features:
+
+- Integrate batching to speed up migration. @arybakov05 [#10](https://github.com/interaktivgmbh/interaktiv.alttextgenerator/issues/10)
+
+
+### Bug fixes:
+
+- Send code 500 instead of 200 when generation fails. @arybakov05 [#10](https://github.com/interaktivgmbh/interaktiv.alttextgenerator/issues/10)
+
 ## 1.0.1 (2026-01-16)
 
 
