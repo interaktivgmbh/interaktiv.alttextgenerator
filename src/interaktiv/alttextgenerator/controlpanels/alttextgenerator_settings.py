@@ -24,6 +24,15 @@ class IAltTextGeneratorSettings(Interface):
         required=True,
     )
 
+    batch_size = schema.Int(
+        title=_("Batch size"),
+        description=_(
+            "The number of concurrent images being processed during migration."
+        ),
+        default=10,
+        required=True,
+    )
+
     whitelisted_image_types = schema.List(
         title=_("Whitelisted image types"),
         description=_(

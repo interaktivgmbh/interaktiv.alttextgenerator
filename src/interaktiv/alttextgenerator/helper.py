@@ -1,4 +1,5 @@
 from interaktiv.alttextgenerator import _
+from interaktiv.alttextgenerator import logger
 from interaktiv.alttextgenerator.exc import ImageResizeError
 from interaktiv.alttextgenerator.exc import ValidationError
 from io import BytesIO
@@ -194,3 +195,14 @@ def check_whitelisted_mimetype(context: Image) -> None:
         raise ValidationError(
             _("Alt text generation is not supported for this file type."), 406
         )
+
+
+def check_image_constraints(context: Image) -> bool:
+    try:
+        check_generation_allowed(context)
+        check_whitelisted_mimetype(context)
+
+        return True
+    except ValidationError as e:
+        logger.error(e)
+        return False
