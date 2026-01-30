@@ -19,6 +19,7 @@ from Products.ZCatalog.CatalogBrains import AbstractCatalogBrain
 from typing import Callable
 from typing import List
 from typing import Optional
+from ZODB.POSException import ConflictError
 from zope.component import getUtility
 from zope.interface import implementer
 
@@ -43,6 +44,30 @@ class HiddenProfiles:
 def _has_empty_alt_texts(obj: AbstractCatalogBrain) -> bool:
     alt_text = obj.alt_text.strip() if obj.alt_text else None
     return not alt_text
+
+
+def _process_batch(batch: List[Image]) -> int:
+    logger.info(f"Processing {len(batch)} images.")
+
+    try:
+        updated = generate_alt_text_suggestion_batch(batch)
+    except Exception as e:
+        logger.error(f"An unexpected error occurred while processing a batch: {e}")
+        return 0
+
+    if updated > 0:
+        try:
+            transaction.commit()
+            logger.info(f"Committed changes to {updated} images.")
+        except ConflictError:
+            transaction.abort()
+            logger.error(
+                f"Failed to commit changes to {updated} images due to conflicts."
+                "Aborting batch."
+            )
+            return 0
+
+    return updated
 
 
 # noinspection PyUnusedLocal
@@ -86,22 +111,14 @@ def alt_text_migration(
         batch.append(obj)
 
         if len(batch) == batch_size:
-            logger.info(f"Processing {len(batch)} images.")
-            updated = generate_alt_text_suggestion_batch(batch)
-
+            updated = _process_batch(batch)
             total_migrated += updated
-            transaction.commit()
-            logger.info(f"Committed changes to {updated} images.")
 
             batch.clear()
 
     if batch:
-        logger.info(f"Processing {len(batch)} images.")
-        updated = generate_alt_text_suggestion_batch(batch)
-
+        updated = _process_batch(batch)
         total_migrated += updated
-        transaction.commit()
-        logger.info(f"Committed changes to {updated} images.")
 
     logger.info(f"{total_migrated} of total {len(all_images)} images migrated.")
 
