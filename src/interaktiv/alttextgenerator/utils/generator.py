@@ -53,13 +53,13 @@ def generate_alt_text_suggestion_batch(batch: List[Image]) -> int:
             logger.error(
                 f"Failed to generate alt text suggestion for image {context.id}: {e}"
             )
-            continue
+            prompts.append(None)
 
     ai_client: AIClient = getUtility(IAIClient)
     result = ai_client.batch(prompts)
 
-    for context, res in zip(batch, result):
-        if not res:
+    for context, res in zip(batch, result, strict=True):
+        if not res or isinstance(res, BaseException):
             continue
 
         selected_model = get_model_name_from_slug(ai_client.selected_model, context)

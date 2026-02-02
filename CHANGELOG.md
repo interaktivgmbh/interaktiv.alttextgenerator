@@ -9,6 +9,20 @@
 
 <!-- towncrier release notes start -->
 
+## 1.1.1 (2026-02-02)
+
+
+### Bug fixes:
+
+- Fix possible index mismatch during batch processing. @arybakov05
+- Use session manager to maintain single connection pool during migration. @arybakov05
+
+
+### Internal:
+
+- Added more robust error handling. @arybakov05
+- Normalize image orientation in b64_resized_image helper. @arybakov05
+
 ## 1.1.0 (2026-01-27)
 
 

@@ -1,9 +1,11 @@
+from interaktiv.aiclient.types import Prompt
 from interaktiv.alttextgenerator import _
 from interaktiv.alttextgenerator import logger
 from interaktiv.alttextgenerator.exc import ImageResizeError
 from interaktiv.alttextgenerator.exc import ValidationError
 from io import BytesIO
 from PIL import Image as PILImage
+from PIL.ImageOps import exif_transpose
 from plone import api
 from plone.app.contenttypes.content import Image
 from plone.dexterity.content import DexterityContent
@@ -11,8 +13,6 @@ from plone.namedfile.file import NamedBlobImage
 from plone.registry import Registry
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from typing import Any
-from typing import Dict
 from typing import List
 from typing import Optional
 from typing import Tuple
@@ -25,12 +25,12 @@ import re
 
 
 # see https://openrouter.ai/docs/guides/overview/multimodal/images
-IMAGE_INPUT_TYPES = [
-    "image/png",
-    "image/jpeg",
-    "image/webp",
-    "image/gif",
-]
+IMAGE_INPUT_TYPES = {
+    "PNG": "image/png",
+    "JPEG": "image/jpeg",
+    "WEBP": "image/webp",
+    "GIF": "image/gif",
+}
 
 
 def b64_resized_image(image: NamedBlobImage, size: Tuple[int, int] = (512, 512)) -> str:
@@ -45,18 +45,21 @@ def b64_resized_image(image: NamedBlobImage, size: Tuple[int, int] = (512, 512))
             bytestring=image.data, output_width=size[0], output_height=size[1]
         )
     else:
-        img = PILImage.open(BytesIO(image.data))
-        img.thumbnail(size, resample=PILImage.Resampling.LANCZOS)
-
-        img_format = img.format
-        image_mimetype = img.get_format_mimetype()
-
-        if image_mimetype not in IMAGE_INPUT_TYPES:
-            img_format = "PNG"
-            image_mimetype = "image/png"
-
         buffered = BytesIO()
-        img.save(buffered, format=img_format)
+
+        with PILImage.open(BytesIO(image.data)) as img:
+            img = exif_transpose(img)
+            img.thumbnail(size, resample=PILImage.Resampling.LANCZOS)
+
+            img_format = img.format
+
+            if img_format not in IMAGE_INPUT_TYPES:
+                img_format = "PNG"
+
+            image_mimetype = IMAGE_INPUT_TYPES[img_format]
+
+            img.save(buffered, format=img_format)
+
         image_bytes = buffered.getvalue()
 
     image_base64 = base64.b64encode(image_bytes).decode("utf-8")
@@ -78,7 +81,7 @@ def __get_prompts_from_registry(context: Image) -> Tuple[str, str]:
     return system_prompt, user_prompt
 
 
-def construct_prompt_from_context(context: Image) -> List[Dict[str, Any]]:
+def construct_prompt_from_context(context: Image) -> Prompt:
     """
     Constructs a prompt from the Image context. The prompt is ready to be
     passed into the AI Client's call method. System and user prompts are
@@ -90,7 +93,7 @@ def construct_prompt_from_context(context: Image) -> List[Dict[str, Any]]:
     image: NamedBlobImage = context.image
     try:
         image_base64 = b64_resized_image(image)
-    except (ValueError, OSError) as e:
+    except Exception as e:
         raise ImageResizeError(e) from e
 
     if system_prompt:

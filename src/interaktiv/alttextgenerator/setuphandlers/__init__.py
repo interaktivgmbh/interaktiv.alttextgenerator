@@ -1,3 +1,4 @@
+from interaktiv.aiclient.helper import batch_session
 from interaktiv.alttextgenerator import logger
 from interaktiv.alttextgenerator.behaviors.alt_text_metadata import (
     IAltTextMetadataMarker,
@@ -19,6 +20,7 @@ from Products.ZCatalog.CatalogBrains import AbstractCatalogBrain
 from typing import Callable
 from typing import List
 from typing import Optional
+from ZODB.POSException import ConflictError
 from zope.component import getUtility
 from zope.interface import implementer
 
@@ -45,6 +47,30 @@ def _has_empty_alt_texts(obj: AbstractCatalogBrain) -> bool:
     return not alt_text
 
 
+def _process_batch(batch: List[Image]) -> int:
+    logger.info(f"Processing {len(batch)} images.")
+
+    try:
+        updated = generate_alt_text_suggestion_batch(batch)
+    except Exception as e:
+        logger.error(f"An unexpected error occurred while processing a batch: {e}")
+        return 0
+
+    if updated > 0:
+        try:
+            transaction.commit()
+            logger.info(f"Committed changes to {updated} images.")
+        except ConflictError:
+            transaction.abort()
+            logger.error(
+                f"Failed to commit changes to {updated} images due to conflicts. "
+                "Aborting batch."
+            )
+            return 0
+
+    return updated
+
+
 # noinspection PyUnusedLocal
 def alt_text_migration(
     context: Optional[SetupTool],
@@ -68,42 +94,39 @@ def alt_text_migration(
         unrestricted=True,
     )
 
+    logger.info(f"Found a total of {len(all_images)} images.")
+
     registry: Registry = getUtility(IRegistry)
     batch_size = registry["interaktiv.alttextgenerator.batch_size"]
 
     batch: List[Image] = []
+    qualified_images = 0
     total_migrated = 0
 
-    for brain in all_images:
-        if not filter_function(brain):
-            continue
+    with batch_session():
+        for brain in all_images:
+            if not filter_function(brain):
+                continue
 
-        obj = brain.getObject()
+            obj = brain.getObject()
 
-        if not check_image_constraints(obj):
-            continue
+            if not check_image_constraints(obj):
+                continue
 
-        batch.append(obj)
+            qualified_images += 1
+            batch.append(obj)
 
-        if len(batch) == batch_size:
-            logger.info(f"Processing {len(batch)} images.")
-            updated = generate_alt_text_suggestion_batch(batch)
+            if len(batch) == batch_size:
+                updated = _process_batch(batch)
+                total_migrated += updated
 
+                batch.clear()
+
+        if batch:
+            updated = _process_batch(batch)
             total_migrated += updated
-            transaction.commit()
-            logger.info(f"Committed changes to {updated} images.")
 
-            batch.clear()
-
-    if batch:
-        logger.info(f"Processing {len(batch)} images.")
-        updated = generate_alt_text_suggestion_batch(batch)
-
-        total_migrated += updated
-        transaction.commit()
-        logger.info(f"Committed changes to {updated} images.")
-
-    logger.info(f"{total_migrated} of total {len(all_images)} images migrated.")
+    logger.info(f"{total_migrated} of total {qualified_images} images migrated.")
 
 
 # noinspection PyUnusedLocal
