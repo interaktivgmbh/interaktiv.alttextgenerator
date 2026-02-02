@@ -63,7 +63,7 @@ def _process_batch(batch: List[Image]) -> int:
         except ConflictError:
             transaction.abort()
             logger.error(
-                f"Failed to commit changes to {updated} images due to conflicts."
+                f"Failed to commit changes to {updated} images due to conflicts. "
                 "Aborting batch."
             )
             return 0
@@ -94,10 +94,13 @@ def alt_text_migration(
         unrestricted=True,
     )
 
+    logger.info(f"Found a total of {len(all_images)} images.")
+
     registry: Registry = getUtility(IRegistry)
     batch_size = registry["interaktiv.alttextgenerator.batch_size"]
 
     batch: List[Image] = []
+    qualified_images = 0
     total_migrated = 0
 
     with batch_session():
@@ -110,6 +113,7 @@ def alt_text_migration(
             if not check_image_constraints(obj):
                 continue
 
+            qualified_images += 1
             batch.append(obj)
 
             if len(batch) == batch_size:
@@ -122,7 +126,7 @@ def alt_text_migration(
             updated = _process_batch(batch)
             total_migrated += updated
 
-    logger.info(f"{total_migrated} of total {len(all_images)} images migrated.")
+    logger.info(f"{total_migrated} of total {qualified_images} images migrated.")
 
 
 # noinspection PyUnusedLocal
