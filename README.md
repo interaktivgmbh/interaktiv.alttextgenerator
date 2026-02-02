@@ -105,7 +105,12 @@ while.
 ![Alt Text Generator Migration Profile](docs/migration.png)
 
 The images are processed in batches, the size of which can be configured in the
-control panel.
+control panel. The speed is determined by the number of concurrent requests to
+the OpenRouter API, which can be configured in the AI Client control panel.
+Changes are committed after a batch was processed successfully. In case of a
+conflict error, the entire batch is aborted and changes are rolled back. In this
+case, the image batch will not be processed again until another migration run
+is triggered.
 
 The logger will keep you up to date with the current progress of the migration.
 
@@ -143,7 +148,7 @@ You can also install the add-on from the source. In your `mx.ini` file, add:
 ```ini
 [interaktiv.alttextgenerator]
 url = git@github.com:interaktivgmbh/interaktiv.alttextgenerator.git
-rev = v1.1.0
+rev = v1.1.1
 extras = test
 ```
 
@@ -152,7 +157,7 @@ Or using https:
 ```ini
 [interaktiv.alttextgenerator]
 url = https://github.com/interaktivgmbh/interaktiv.alttextgenerator.git
-rev = v1.1.0
+rev = v1.1.1
 extras = test
 ```
 
