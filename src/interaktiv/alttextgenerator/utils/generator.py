@@ -58,7 +58,7 @@ def generate_alt_text_suggestion_batch(batch: List[Image]) -> int:
     ai_client: AIClient = getUtility(IAIClient)
     result = ai_client.batch(prompts)
 
-    for context, res in zip(batch, result):
+    for context, res in zip(batch, result, strict=True):
         if not res or isinstance(res, BaseException):
             continue
 

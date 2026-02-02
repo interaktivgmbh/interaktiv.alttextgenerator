@@ -1,3 +1,4 @@
+from interaktiv.aiclient.types import Prompt
 from interaktiv.alttextgenerator import _
 from interaktiv.alttextgenerator import logger
 from interaktiv.alttextgenerator.exc import ImageResizeError
@@ -12,8 +13,6 @@ from plone.namedfile.file import NamedBlobImage
 from plone.registry import Registry
 from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
-from typing import Any
-from typing import Dict
 from typing import List
 from typing import Optional
 from typing import Tuple
@@ -82,7 +81,7 @@ def __get_prompts_from_registry(context: Image) -> Tuple[str, str]:
     return system_prompt, user_prompt
 
 
-def construct_prompt_from_context(context: Image) -> List[Dict[str, Any]]:
+def construct_prompt_from_context(context: Image) -> Prompt:
     """
     Constructs a prompt from the Image context. The prompt is ready to be
     passed into the AI Client's call method. System and user prompts are
