@@ -1,3 +1,4 @@
+from interaktiv.aiclient.helper import batch_session
 from interaktiv.alttextgenerator import logger
 from interaktiv.alttextgenerator.behaviors.alt_text_metadata import (
     IAltTextMetadataMarker,
@@ -99,26 +100,27 @@ def alt_text_migration(
     batch: List[Image] = []
     total_migrated = 0
 
-    for brain in all_images:
-        if not filter_function(brain):
-            continue
+    with batch_session():
+        for brain in all_images:
+            if not filter_function(brain):
+                continue
 
-        obj = brain.getObject()
+            obj = brain.getObject()
 
-        if not check_image_constraints(obj):
-            continue
+            if not check_image_constraints(obj):
+                continue
 
-        batch.append(obj)
+            batch.append(obj)
 
-        if len(batch) == batch_size:
+            if len(batch) == batch_size:
+                updated = _process_batch(batch)
+                total_migrated += updated
+
+                batch.clear()
+
+        if batch:
             updated = _process_batch(batch)
             total_migrated += updated
-
-            batch.clear()
-
-    if batch:
-        updated = _process_batch(batch)
-        total_migrated += updated
 
     logger.info(f"{total_migrated} of total {len(all_images)} images migrated.")
 
