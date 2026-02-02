@@ -5,6 +5,7 @@ from plone.app.testing import TEST_USER_ID
 from plone.namedfile.file import NamedImage
 from Products.CMFPlone.tests import dummy
 from unittest import mock
+from ZODB.POSException import ConflictError
 
 
 class TestSetuphandlers:
@@ -109,3 +110,28 @@ class TestSetuphandlers:
         # post condition
         assert image1.alt_text == ""  # not modified, blacklisted path
         assert image2.alt_text == ""  # not modified, image type not whitelisted
+
+    @mock.patch("interaktiv.alttextgenerator.setuphandlers.transaction.abort")
+    @mock.patch("interaktiv.alttextgenerator.setuphandlers.transaction.commit")
+    @mock.patch(
+        "interaktiv.alttextgenerator.setuphandlers.generate_alt_text_suggestion_batch"
+    )
+    def test_alt_text_migration__conflict_error(
+        self, mock_generate_suggestion_batch, mock_commit, mock_abort, portal
+    ):
+        # setup
+        mock_generate_suggestion_batch.return_value = 1
+        mock_commit.side_effect = ConflictError()
+        setRoles(portal, TEST_USER_ID, ["Manager"])
+        api.content.create(
+            type="Image",
+            id="test-image1",
+            container=portal,
+            image=NamedImage(dummy.JpegImage(), "image/jpeg", "test.jpeg"),
+        )
+
+        # do it
+        alt_text_migration(None)
+
+        # post condition
+        mock_abort.assert_called_once()
