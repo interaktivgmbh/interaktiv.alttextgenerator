@@ -27,6 +27,7 @@ In the controlpanel, you may configure the
 
 * system prompt
 * user prompt
+* batch size for migrations
 * allowed image types
 * blacklisted paths
 
@@ -148,7 +149,7 @@ You can also install the add-on from the source. In your `mx.ini` file, add:
 ```ini
 [interaktiv.alttextgenerator]
 url = git@github.com:interaktivgmbh/interaktiv.alttextgenerator.git
-rev = v1.1.1
+rev = v2.0.0
 extras = test
 ```
 
@@ -157,7 +158,7 @@ Or using https:
 ```ini
 [interaktiv.alttextgenerator]
 url = https://github.com/interaktivgmbh/interaktiv.alttextgenerator.git
-rev = v1.1.1
+rev = v2.0.0
 extras = test
 ```
 
