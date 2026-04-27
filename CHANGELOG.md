@@ -9,6 +9,13 @@
 
 <!-- towncrier release notes start -->
 
+## 2.0.1 (2026-04-27)
+
+
+### Internal:
+
+- Pin latest version `2.0.1` of `interaktiv.aiclient`. @arybakov05
+
 ## 2.0.0 (2026-02-13)
 
 
