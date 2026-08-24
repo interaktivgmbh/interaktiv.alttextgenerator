@@ -21,7 +21,12 @@ from zope.component.hooks import getSite
 
 import base64
 import cairosvg
+import pillow_avif  # noqa: F401  registers the AVIF decoder on import
+import pillow_heif
 import re
+
+
+pillow_heif.register_heif_opener()
 
 
 # see https://openrouter.ai/docs/guides/overview/multimodal/images
@@ -31,6 +36,44 @@ IMAGE_INPUT_TYPES = {
     "WEBP": "image/webp",
     "GIF": "image/gif",
 }
+
+# not every color mode can be written in every format
+# e.g. a CMYK image cannot be saved as PNG
+FORMAT_MODES = {
+    "PNG": {"1", "L", "LA", "P", "RGB", "RGBA"},
+    "JPEG": {"L", "RGB", "CMYK"},
+    "WEBP": {"RGB", "RGBA"},
+    "GIF": {"L", "P", "RGB", "RGBA"},
+}
+
+
+# Pillow silently ignores the resample filter for these modes, so they have to
+# be resized in RGB space instead
+UNRESAMPLEABLE_MODES = ("1", "P")
+
+
+def _ensure_resampleable_mode(img: PILImage.Image) -> PILImage.Image:
+    """Moves palette and bilevel images into a mode the resample filter applies to."""
+    if img.mode not in UNRESAMPLEABLE_MODES:
+        return img
+
+    return img.convert("RGBA" if "transparency" in img.info else "RGB")
+
+
+def _ensure_saveable_mode(img: PILImage.Image, img_format: str) -> PILImage.Image:
+    """
+    Converts the image to a color mode the target format can encode,
+    preserving transparency where the format allows it.
+    """
+    supported = FORMAT_MODES[img_format]
+
+    if img.mode in supported:
+        return img
+
+    has_alpha = img.mode in ("RGBA", "LA", "PA") or "transparency" in img.info
+    target = "RGBA" if has_alpha and "RGBA" in supported else "RGB"
+
+    return img.convert(target)
 
 
 def b64_resized_image(image: NamedBlobImage, size: Tuple[int, int] = (512, 512)) -> str:
@@ -44,21 +87,23 @@ def b64_resized_image(image: NamedBlobImage, size: Tuple[int, int] = (512, 512))
         image_bytes = cairosvg.svg2png(
             bytestring=image.data, output_width=size[0], output_height=size[1]
         )
+        image_mimetype = IMAGE_INPUT_TYPES["PNG"]
     else:
         buffered = BytesIO()
 
         with PILImage.open(BytesIO(image.data)) as img:
-            img = exif_transpose(img)
-            img.thumbnail(size, resample=PILImage.Resampling.LANCZOS)
-
             img_format = img.format
 
             if img_format not in IMAGE_INPUT_TYPES:
                 img_format = "PNG"
 
+            transposed = _ensure_resampleable_mode(exif_transpose(img))
+            transposed.thumbnail(size, resample=PILImage.Resampling.LANCZOS)
+            transposed = _ensure_saveable_mode(transposed, img_format)
+
             image_mimetype = IMAGE_INPUT_TYPES[img_format]
 
-            img.save(buffered, format=img_format)
+            transposed.save(buffered, format=img_format)
 
         image_bytes = buffered.getvalue()
 
