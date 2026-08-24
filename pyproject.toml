@@ -38,11 +38,14 @@ dependencies = [
     "CairoSVG==2.7.1",
     "interaktiv.aiclient==2.0.1",
     "interaktiv.alttexts==2.0.0",
+    "pillow-heif==0.22.0",
+    "pillow-avif-plugin==1.6.0",
 ]
 
 [project.optional-dependencies]
 test = [
     "horse-with-no-namespace",
+    "piexif",
     "plone.app.testing",
     "plone.restapi[test]",
     "pytest",
