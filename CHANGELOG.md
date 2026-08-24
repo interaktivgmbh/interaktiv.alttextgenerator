@@ -9,6 +9,15 @@
 
 <!-- towncrier release notes start -->
 
+## 2.0.2 (2026-08-24)
+
+
+### Bug fixes:
+
+- Keep the original image format after `exif_transpose` to prevent color space conversion errors. @arybakov05 [#15](https://github.com/interaktivgmbh/interaktiv.alttextgenerator/issues/15)
+- Resize palette and bilevel images (GIF) in RGB space, Pillow silently ignored the resample filter for them. @arybakov05 [#15](https://github.com/interaktivgmbh/interaktiv.alttextgenerator/issues/15)
+- Support HEIC, HEIF and AVIF images via `pillow-heif` and `pillow-avif-plugin`, converted to PNG. @arybakov05 [#15](https://github.com/interaktivgmbh/interaktiv.alttextgenerator/issues/15)
+
 ## 2.0.1 (2026-04-27)
 
 

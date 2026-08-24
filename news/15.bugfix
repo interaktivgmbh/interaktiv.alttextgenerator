@@ -1,3 +1,0 @@
-Keep the original image format after `exif_transpose` to prevent color space conversion errors. @arybakov05
-Resize palette and bilevel images (GIF) in RGB space, Pillow silently ignored the resample filter for them. @arybakov05
-Support HEIC, HEIF and AVIF images via `pillow-heif` and `pillow-avif-plugin`, converted to PNG. @arybakov05
