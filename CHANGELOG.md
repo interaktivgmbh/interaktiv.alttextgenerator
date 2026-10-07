@@ -9,6 +9,14 @@
 
 <!-- towncrier release notes start -->
 
+## 2.1.0 (2026-10-07)
+
+
+### New features:
+
+- Support for Plone 6.2. @arybakov05 
+- Update to interaktiv.aiclient v3.0.0. @arybakov05 
+
 ## 2.0.2 (2026-08-24)
 
 
