@@ -21,6 +21,7 @@ classifiers = [
     "Framework :: Plone",
     "Framework :: Plone :: 6.0",
     "Framework :: Plone :: 6.1",
+    "Framework :: Plone :: 6.2",
     "Framework :: Plone :: Addon",
     "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     "Operating System :: OS Independent",
@@ -36,9 +37,9 @@ dependencies = [
     "plone.restapi",
     "plone.volto",
     "CairoSVG==2.7.1",
-    "interaktiv.aiclient==2.0.1",
+    "interaktiv.aiclient==3.0.0",
     "interaktiv.alttexts==2.0.0",
-    "pillow-heif==0.22.0",
+    "pillow-heif>=0.22.0,<2",
     "pillow-avif-plugin==1.6.0",
 ]
 

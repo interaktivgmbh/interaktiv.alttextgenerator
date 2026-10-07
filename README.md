@@ -11,13 +11,13 @@ using assistive technologies and more discoverable by search engines.
 
 ## Prerequisites
 
-Tested for Plone `6.0.15`.
+Tested for Plone 6.0, 6.1 and 6.2 on Python 3.10 to 3.13.
 
 This add-on requires `interaktiv.aiclient` for its AI capabilities and
 `interaktiv.alttexts` to provide the alt text behaviour.
 
 Currently, this add-on only works out of the box with Volto. Therefore, you
-should also install the according Volto plugin [volto-interaktiv-alttextgenerator](https://github.com/interaktivgmbh/volto-interaktiv-alttextgenerator).
+should also install the according Volto plugin [volto-alttextgenerator](https://github.com/interaktivgmbh/volto-alttextgenerator).
 
 ## Features
 
@@ -149,7 +149,7 @@ You can also install the add-on from the source. In your `mx.ini` file, add:
 ```ini
 [interaktiv.alttextgenerator]
 url = git@github.com:interaktivgmbh/interaktiv.alttextgenerator.git
-rev = v2.0.1
+rev = v2.1.0
 extras = test
 ```
 
@@ -158,7 +158,7 @@ Or using https:
 ```ini
 [interaktiv.alttextgenerator]
 url = https://github.com/interaktivgmbh/interaktiv.alttextgenerator.git
-rev = v2.0.1
+rev = v2.1.0
 extras = test
 ```
 
